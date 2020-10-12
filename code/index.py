@@ -22,5 +22,9 @@ def main():
     window.show()
     app.exec()
 
+
+def ui():
+	print('test')
+
 if name == 'main':
     main()
