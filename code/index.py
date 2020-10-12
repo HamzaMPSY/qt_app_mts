@@ -10,6 +10,9 @@ import numpy as np
 
 FORM_CLASS,_= loadUiType(path.join(path.dirname(__file__),"ui/main.ui"))
 
+def test1():
+	print('it works')
+
 class MainApp(QMainWindow,FORMCLASS):
     """docstring for MainApp"""
     def init(self, arg=None):
