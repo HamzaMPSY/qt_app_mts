@@ -30,5 +30,4 @@ def ui():
 	print('test')
 
 if __name__ == '__main__':
-    print(path.join(path.dirname(__file__),"ui\main.ui"))
     main()    
