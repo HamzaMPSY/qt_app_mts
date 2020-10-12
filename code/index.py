@@ -9,3 +9,18 @@ import torch
 import numpy as np
 
 FORM_CLASS,_= loadUiType(path.join(path.dirname(__file__),"ui/main.ui"))
+
+class MainApp(QMainWindow,FORMCLASS):
+    """docstring for MainApp"""
+    def init(self, arg=None):
+        super(MainApp, self).init(arg)
+        QMainWindow.init(self)
+
+def main():
+    app = QApplication(sys.argv)
+    window = MainApp()
+    window.show()
+    app.exec()
+
+if name == 'main':
+    main()
