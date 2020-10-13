@@ -8,20 +8,25 @@ from os import path
 import numpy as np
 
 
-FORM_CLASS,_= loadUiType(path.join(path.dirname(__file__),"../ui/login.ui"))
+LOGIN_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/login.ui"))
+ADMIN_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/admin.ui"))
 
-class MainApp(QMainWindow,FORM_CLASS):
+class MainApp(QMainWindow,LOGIN_UI):
     """docstring for MainApp"""
+
+    switchWindow = pyqtSignal()
+
     def __init__(self, arg=None):
         super(MainApp, self).__init__(arg)
         QMainWindow.__init__(self)
         self.setupUi(self)
         self.handleUI()
         self.handleLogin()
+        
 
     def handleUI(self):
         self.setWindowTitle('MTS Scanner')
-        self.setFixedSize(899,575)
+        self.setFixedSize(900,575)
         self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
     
     def handleLogin(self):
@@ -33,14 +38,56 @@ class MainApp(QMainWindow,FORM_CLASS):
         if login == '' or password == '':
             QMessageBox.warning(self,"Error","Please complete all fields!")
         elif login=='admin' and password == "admin":
-            QMessageBox.information(self,"Welcome back","Mar7ba b si admin m3ana!")
+            self.switchWindow.emit()
         else:
             QMessageBox.warning(self,"dzl","chkon nta ???")
 
+
+class Admin(QMainWindow,ADMIN_UI):
+    switchWindow = pyqtSignal()
+
+    def __init__(self, arg=None):
+        super(Admin, self).__init__(arg)
+        QWidget.__init__(self)
+        self.setupUi(self)
+        self.handleUI()
+        self.handleLogout()
+        # self.handleHeaders()
+
+    def handleUI(self):
+        self.setWindowTitle('MTS Scanner : Admin Control Panel')
+        self.setFixedSize(900,575)
+        self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+
+    def handleLogout(self):
+        self.btnlogout.clicked.connect(self.logout)
+
+    def logout(self):
+        self.switchWindow.emit()
+
+class Controller:
+
+    def __init__(self):
+        self.login = MainApp()
+        self.admin = Admin()
+
+    def showLogin(self):
+        self.login.QTxtLogin.setText('')
+        self.login.QTxtPass.setText('')
+        self.login.switchWindow.connect(self.showAdmin)
+        self.admin.close()
+        self.login.show()
+
+    def showAdmin(self):
+        self.admin.switchWindow.connect(self.showLogin)
+        self.login.close()
+        self.admin.show()
+
+
 def main():
     app = QApplication(sys.argv)
-    window = MainApp()
-    window.show()
+    controller = Controller()
+    controller.showLogin()
     app.exec_()
 
 if __name__ == '__main__':
