@@ -134,9 +134,9 @@ QMainWindow{
     <property name="geometry">
      <rect>
       <x>240</x>
-      <y>80</y>
+      <y>90</y>
       <width>651</width>
-      <height>371</height>
+      <height>381</height>
      </rect>
     </property>
     <property name="orientation">

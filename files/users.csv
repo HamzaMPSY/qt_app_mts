@@ -1,6 +1,5 @@
 username,password,isadmin
-user1,pass1,0
-hamza,hamza,0
-otman,otman,0
+user2,pass2,0
+hamza,hamza,1
+otman1,otman1,0
 admin,admin,1
-
