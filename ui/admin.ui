@@ -136,7 +136,7 @@ QMainWindow{
       <x>240</x>
       <y>80</y>
       <width>651</width>
-      <height>451</height>
+      <height>371</height>
      </rect>
     </property>
     <property name="orientation">
