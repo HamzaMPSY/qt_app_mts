@@ -39,7 +39,7 @@ class MainApp(QMainWindow,LOGIN_UI):
         if login == '' or password == '':
             QMessageBox.warning(self,"Error","Please complete all fields!")
         else:
-            users = pd.read_csv('../files/users.csv',delimiter=";")
+            users = pd.read_csv('../files/users.csv')
             res = users[(users['username'] == login) & (users['password'] == password)]
             # print(res.shape)
             if res.shape[0] >= 1 :
@@ -81,7 +81,7 @@ class Admin(QMainWindow,ADMIN_UI):
         self.switchWindow.emit()
 
     def users(self):
-        users = pd.read_csv('../files/users.csv',delimiter =";")
+        users = pd.read_csv('../files/users.csv')
         model = pandasModel(users)
         self.tableView.setModel(model)
         self.tableView.horizontalHeader().setStretchLastSection(True) 
@@ -90,7 +90,7 @@ class Admin(QMainWindow,ADMIN_UI):
 
     def modifyUser(self,item):
         row = item.row()
-        res = pd.read_csv('../files/users.csv',delimiter=";").iloc[row,:]
+        res = pd.read_csv('../files/users.csv').iloc[row,:]
         username = res['username']
         password = res['password']
         isadmin = res['isadmin']
@@ -163,22 +163,23 @@ class EditDialog(QDialog):
         layout.addRow("Is Admin :", self.isadmin)
         layout.addWidget(buttonBox)
 
-        buttonBox.accepted.connect(self.accept)
-        buttonBox.rejected.connect(self.reject)
-        # buttonBox.helpRequested.connect(self.delete)
+        buttonBox.accepted.connect(self.save)
+        buttonBox.rejected.connect(self.cancel)
+        buttonBox.helpRequested.connect(self.delete)
 
-        def accept(self):
-            df = pd.read_csv('../files/users.csv',delimiter=";")
-            df[self.row,'username'] = self.username.text()
-            df[self.row,'password'] = self.password.text()
-            df[self.row,'isadmin'] = int(self.isadmin.text())
-            df.to_csv('../files/users.csv',index=False)
+    def save(self):
+        df = pd.read_csv('../files/users.csv')
+        df.ix[self.row,'username'] = self.username.text()
+        df.ix[self.row,'password'] = self.password.text()
+        df.ix[self.row,'isadmin'] = self.isadmin.text()
+        df.to_csv('../files/users.csv',index=False)
+        self.close()
 
-        def delete(self):
-            pass
+    def delete(self):
+        pass
 
-        def reject(self):
-            pass
+    def cancel(self):
+        pass
 
     def getInputs(self):
         return (self.first.text(), self.second.text())
