@@ -144,6 +144,19 @@ QMainWindow{
     </property>
     <widget class="QTableView" name="tableView"/>
    </widget>
+   <widget class="QPushButton" name="btnadduser">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>480</y>
+      <width>209</width>
+      <height>36</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>add user</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

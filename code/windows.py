@@ -69,6 +69,8 @@ class Admin(QMainWindow,ADMIN_UI):
     def handleButtons(self):
         self.btnlogout.clicked.connect(self.logout)
         self.btnusers.clicked.connect(self.users)
+        self.btnadduser.hide()
+        self.btnadduser.clicked.connect(self.adduser)
 
     def handleHeaders(self):
         date = datetime.datetime.now()
@@ -79,6 +81,7 @@ class Admin(QMainWindow,ADMIN_UI):
         self.switchWindow.emit()
 
     def users(self):
+        self.btnadduser.show()
         users = pd.read_csv('../files/users.csv')
         model = pandasModel(users)
         self.tableView.setModel(model)
@@ -95,6 +98,12 @@ class Admin(QMainWindow,ADMIN_UI):
         password = res['password']
         isadmin = res['isadmin']
         editDialog = EditDialog(username,password,isadmin,row)
+        editDialog.exec_()
+        editDialog.close()
+        self.users()
+
+    def adduser(self):
+        editDialog = AddDialog()
         editDialog.exec_()
         editDialog.close()
         self.users()
