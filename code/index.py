@@ -16,6 +16,26 @@ class MainApp(QMainWindow,FORM_CLASS):
         super(MainApp, self).__init__(arg)
         QMainWindow.__init__(self)
         self.setupUi(self)
+        self.handleUI()
+        self.handleLogin()
+
+    def handleUI(self):
+        self.setWindowTitle('MTS Scanner')
+        self.setFixedSize(899,575)
+        self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+    
+    def handleLogin(self):
+        self.btnlogin.clicked.connect(self.login)
+
+    def login(self):
+        login = self.QTxtLogin.text()
+        password = self.QTxtPass.text()
+        if login == '' or password == '':
+            QMessageBox.warning(self,"Error","Please complete all fields!")
+        elif login=='admin' and password == "admin":
+            QMessageBox.information(self,"Welcome back","Mar7ba b si admin m3ana!")
+        else:
+            QMessageBox.warning(self,"dzl","chkon nta ???")
 
 def main():
     app = QApplication(sys.argv)

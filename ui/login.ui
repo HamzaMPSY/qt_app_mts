@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1010</width>
-    <height>697</height>
+    <width>899</width>
+    <height>575</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -55,7 +55,7 @@ QMainWindow{ background-image: url(:./bck.jpg); }
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
-       <x>-150</x>
+       <x>0</x>
        <y>0</y>
        <width>1091</width>
        <height>561</height>
@@ -65,17 +65,40 @@ QMainWindow{ background-image: url(:./bck.jpg); }
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>bck1.jpg</pixmap>
+      <pixmap>../assets/bck1.jpg</pixmap>
      </property>
     </widget>
     <widget class="QFrame" name="frame">
      <property name="geometry">
       <rect>
        <x>520</x>
-       <y>40</y>
+       <y>-70</y>
        <width>411</width>
        <height>261</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLineEdit{
+  font-family:  sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  padding-left: 15px;
+  font-size: 14px;
+  color: #17a84b;
+}
+QPushButton{
+  font-family: sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #17a84b;
+  width: 100%;
+  border: 0;
+  padding: 0px;
+  color: #FFFFFF;
+  font-size: 12px;
+}</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -83,7 +106,7 @@ QMainWindow{ background-image: url(:./bck.jpg); }
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="QLineEdit" name="lineEdit_2">
+     <widget class="QLineEdit" name="QTxtLogin">
       <property name="geometry">
        <rect>
         <x>90</x>
@@ -94,15 +117,15 @@ QMainWindow{ background-image: url(:./bck.jpg); }
       </property>
       <property name="font">
        <font>
-        <family>Montserrat SemiBold</family>
-        <pointsize>10</pointsize>
+        <family>sans-serif</family>
+        <pointsize>-1</pointsize>
        </font>
       </property>
       <property name="placeholderText">
        <string>Login</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLineEdit" name="QTxtPass">
       <property name="geometry">
        <rect>
         <x>90</x>
@@ -113,10 +136,8 @@ QMainWindow{ background-image: url(:./bck.jpg); }
       </property>
       <property name="font">
        <font>
-        <family>Montserrat SemiBold</family>
-        <pointsize>10</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
+        <family>sans-serif</family>
+        <pointsize>-1</pointsize>
        </font>
       </property>
       <property name="toolTip">
@@ -126,10 +147,13 @@ QMainWindow{ background-image: url(:./bck.jpg); }
        <string/>
       </property>
       <property name="inputMethodHints">
-       <set>Qt::ImhNone</set>
+       <set>Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
       </property>
       <property name="text">
        <string/>
+      </property>
+      <property name="echoMode">
+       <enum>QLineEdit::Password</enum>
       </property>
       <property name="placeholderText">
        <string>Password</string>
@@ -141,7 +165,7 @@ QMainWindow{ background-image: url(:./bck.jpg); }
        <bool>false</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="login">
+     <widget class="QPushButton" name="btnlogin">
       <property name="geometry">
        <rect>
         <x>90</x>
@@ -162,8 +186,8 @@ QMainWindow{ background-image: url(:./bck.jpg); }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1010</width>
-     <height>26</height>
+     <width>899</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
