@@ -6,6 +6,7 @@ import os
 import sys
 from os import path
 import numpy as np
+import pandas as pd
 import datetime
 
 
@@ -24,7 +25,6 @@ class MainApp(QMainWindow,LOGIN_UI):
         self.handleUI()
         self.handleLogin()
         
-
     def handleUI(self):
         self.setWindowTitle('MTS Scanner')
         self.setFixedSize(900,575)
@@ -38,10 +38,18 @@ class MainApp(QMainWindow,LOGIN_UI):
         password = self.QTxtPass.text()
         if login == '' or password == '':
             QMessageBox.warning(self,"Error","Please complete all fields!")
-        elif login=='admin' and password == "admin":
-            self.switchWindow.emit(login)
         else:
-            QMessageBox.warning(self,"dzl","chkon nta ???")
+            users = pd.read_csv('../files/users.csv',delimiter=";")
+            res = users[(users['username'] == login) & (users['password'] == password)]
+            # print(res.shape)
+            if res.shape[0] >= 1 :
+                if res['isadmin'].item() == 1: 
+                    self.switchWindow.emit(login)
+                else:
+                    QMessageBox.information(self,"Mazal maderna blasa lik ","Tsena tatsnsaliw admin")
+            else:
+                QMessageBox.warning(self,"Error","Login or Password incorrect!")
+        
 
 
 class Admin(QMainWindow,ADMIN_UI):
@@ -72,9 +80,14 @@ class Admin(QMainWindow,ADMIN_UI):
 
     def logout(self):
         self.switchWindow.emit()
-        
+
     def users(self):
-        
+        users = pd.read_csv('../files/users.csv',delimiter =";")
+        model = pandasModel(users)
+        self.tableView.setModel(model)
+        #self.tableView.show()
+  
+
 
 class Controller:
 
@@ -95,6 +108,28 @@ class Controller:
         self.login.close()
         self.admin.show()
 
+class pandasModel(QAbstractTableModel):
+
+    def __init__(self, data):
+        QAbstractTableModel.__init__(self)
+        self._data = data
+
+    def rowCount(self, parent=None):
+        return self._data.shape[0]
+
+    def columnCount(self, parnet=None):
+        return self._data.shape[1]
+
+    def data(self, index, role=Qt.DisplayRole):
+        if index.isValid():
+            if role == Qt.DisplayRole:
+                return str(self._data.iloc[index.row(), index.column()])
+        return None
+
+    def headerData(self, col, orientation, role):
+        if orientation == Qt.Horizontal and role == Qt.DisplayRole:
+            return self._data.columns[col]
+        return None
 
 def main():
     app = QApplication(sys.argv)

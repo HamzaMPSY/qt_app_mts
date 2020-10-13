@@ -52,28 +52,28 @@ QMainWindow{
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="btnusers">
        <property name="text">
-        <string>gestion</string>
+        <string>users</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="btnhistory">
        <property name="text">
         <string>History</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_4">
+      <widget class="QPushButton" name="btninfo">
        <property name="text">
         <string>info</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="btnpins">
        <property name="text">
         <string>Pins</string>
        </property>
@@ -106,7 +106,7 @@ QMainWindow{
      <rect>
       <x>240</x>
       <y>10</y>
-      <width>161</width>
+      <width>241</width>
       <height>49</height>
      </rect>
     </property>
@@ -134,7 +134,7 @@ QMainWindow{
     <property name="geometry">
      <rect>
       <x>240</x>
-      <y>70</y>
+      <y>80</y>
       <width>651</width>
       <height>451</height>
      </rect>
@@ -142,7 +142,7 @@ QMainWindow{
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
     </property>
-    <widget class="QListView" name="listView"/>
+    <widget class="QTableView" name="tableView"/>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
