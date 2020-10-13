@@ -7,10 +7,24 @@ import pandas as pd
 import datetime
 from pandasModel import *
 from dialogs import *
+import os
+
 
 
 LOGIN_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/login.ui"))
 ADMIN_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/admin.ui"))
+
+def logs(login, action):
+    path = '../files/logins.csv'
+    if not os.path.isfile(path):
+        logs = open(path, 'w')
+        logs.write("username,date,action\n")
+        logs.close()
+    logs = open(path, 'a')
+    date = datetime.datetime.now()
+    line = login + "," + date.strftime("%Y/%m/%d %H:%M") + "," + action + "\n" 
+    logs.write(line)
+    logs.close()
 
 class MainApp(QMainWindow,LOGIN_UI):
     """docstring for MainApp"""
@@ -41,6 +55,7 @@ class MainApp(QMainWindow,LOGIN_UI):
             users = pd.read_csv('../files/users.csv')
             res = users[(users['username'] == login) & (users['password'] == password)]
             if res.shape[0] >= 1 :
+                logs(login, "login")
                 if res['isadmin'].item() == 1: 
                     self.switchWindow.emit(login)
                 else:
@@ -69,6 +84,7 @@ class Admin(QMainWindow,ADMIN_UI):
     def handleButtons(self):
         self.btnlogout.clicked.connect(self.logout)
         self.btnusers.clicked.connect(self.users)
+        self.btnhistory.clicked.connect(self.historys)
         self.btnadduser.hide()
         self.btnadduser.clicked.connect(self.adduser)
 
@@ -78,6 +94,7 @@ class Admin(QMainWindow,ADMIN_UI):
         self.usernameLabel.setText(self.login)
 
     def logout(self):
+        logs(self.login, "logout")
         self.switchWindow.emit()
 
     def users(self):
@@ -90,6 +107,14 @@ class Admin(QMainWindow,ADMIN_UI):
         if self.click_flag:
             self.tableView.clicked.connect(self.modifyUser)
             self.click_flag = False
+
+    def historys(self):
+        self.btnadduser.hide()
+        logs = pd.read_csv('../files/logins.csv')
+        model = pandasModel(logs)
+        self.tableView.setModel(model)
+        self.tableView.horizontalHeader().setStretchLastSection(True) 
+        self.tableView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def modifyUser(self,item):
         row = item.row()
