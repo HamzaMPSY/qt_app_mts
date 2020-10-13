@@ -6,6 +6,7 @@ import os
 import sys
 from os import path
 import numpy as np
+import datetime
 
 
 LOGIN_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/login.ui"))
@@ -14,7 +15,7 @@ ADMIN_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/admin.ui"))
 class MainApp(QMainWindow,LOGIN_UI):
     """docstring for MainApp"""
 
-    switchWindow = pyqtSignal()
+    switchWindow = pyqtSignal(str)
 
     def __init__(self, arg=None):
         super(MainApp, self).__init__(arg)
@@ -38,7 +39,7 @@ class MainApp(QMainWindow,LOGIN_UI):
         if login == '' or password == '':
             QMessageBox.warning(self,"Error","Please complete all fields!")
         elif login=='admin' and password == "admin":
-            self.switchWindow.emit()
+            self.switchWindow.emit(login)
         else:
             QMessageBox.warning(self,"dzl","chkon nta ???")
 
@@ -46,30 +47,40 @@ class MainApp(QMainWindow,LOGIN_UI):
 class Admin(QMainWindow,ADMIN_UI):
     switchWindow = pyqtSignal()
 
-    def __init__(self, arg=None):
+    def __init__(self, login,arg=None,):
         super(Admin, self).__init__(arg)
         QWidget.__init__(self)
         self.setupUi(self)
+        self.login = login
         self.handleUI()
-        self.handleLogout()
-        # self.handleHeaders()
+        self.handleButtons()
+        self.handleHeaders()
 
     def handleUI(self):
         self.setWindowTitle('MTS Scanner : Admin Control Panel')
         self.setFixedSize(900,575)
         self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
 
-    def handleLogout(self):
+    def handleButtons(self):
         self.btnlogout.clicked.connect(self.logout)
+        self.btnusers.clicked.connect(self.users)
+
+    def handleHeaders(self):
+        date = datetime.datetime.now()
+        self.dateLabel.setText(date.strftime("%Y/%m/%d, %H:%M"))
+        self.usernameLabel.setText(self.login)
 
     def logout(self):
         self.switchWindow.emit()
+        
+    def users(self):
+        
 
 class Controller:
 
     def __init__(self):
         self.login = MainApp()
-        self.admin = Admin()
+        self.admin = Admin(login = '')
 
     def showLogin(self):
         self.login.QTxtLogin.setText('')
@@ -78,7 +89,8 @@ class Controller:
         self.admin.close()
         self.login.show()
 
-    def showAdmin(self):
+    def showAdmin(self,text):
+        self.admin = Admin(login = text)
         self.admin.switchWindow.connect(self.showLogin)
         self.login.close()
         self.admin.show()
