@@ -14,7 +14,7 @@ import os
 LOGIN_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/login.ui"))
 ADMIN_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/admin.ui"))
 
-def logs(login, action):
+def logs(username, action):
     path = '../files/logins.csv'
     if not os.path.isfile(path):
         logs = open(path, 'w')
@@ -22,7 +22,7 @@ def logs(login, action):
         logs.close()
     logs = open(path, 'a')
     date = datetime.datetime.now()
-    line = login + "," + date.strftime("%Y/%m/%d %H:%M") + "," + action + "\n" 
+    line = username + "," + date.strftime("%Y/%m/%d %H:%M") + "," + action + "\n" 
     logs.write(line)
     logs.close()
 
@@ -115,20 +115,23 @@ class Admin(QMainWindow,ADMIN_UI):
         self.tableView.setModel(model)
         self.tableView.horizontalHeader().setStretchLastSection(True) 
         self.tableView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.tableView.clicked.disconnect()
+        self.click_flag = True
 
+        
     def modifyUser(self,item):
         row = item.row()
         res = pd.read_csv('../files/users.csv').iloc[row,:]
         username = res['username']
         password = res['password']
         isadmin = res['isadmin']
-        editDialog = EditDialog(username,password,isadmin,row)
+        editDialog = EditDialog(username,password,isadmin,row,self.login)
         editDialog.exec_()
         editDialog.close()
         self.users()
 
     def adduser(self):
-        editDialog = AddDialog()
+        editDialog = AddDialog(self.login)
         editDialog.exec_()
         editDialog.close()
         self.users()

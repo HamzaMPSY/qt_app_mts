@@ -1,11 +1,24 @@
 from PyQt5.QtWidgets import *
 import pandas as pd
 from PyQt5.QtCore import Qt
+import os
+import datetime
+def logs(username, action):
+    path = '../files/logins.csv'
+    if not os.path.isfile(path):
+        logs = open(path, 'w')
+        logs.write("username,date,action\n")
+        logs.close()
+    logs = open(path, 'a')
+    date = datetime.datetime.now()
+    line = username + "," + date.strftime("%Y/%m/%d %H:%M") + "," + action + "\n" 
+    logs.write(line)
+    logs.close()
 
 class EditDialog(QDialog):
-    def __init__(self, username,password,isadmin,row, parent=None):
+    def __init__(self, username,password,isadmin,row,login, parent=None):
         super().__init__(parent)
-
+        self.login = login
         self.username = QLineEdit(self)
         self.password = QLineEdit(self)
         self.isadmin = QLineEdit(self)
@@ -35,12 +48,14 @@ class EditDialog(QDialog):
         df.ix[self.row,'password'] = self.password.text()
         df.ix[self.row,'isadmin'] = self.isadmin.text()
         df.to_csv('../files/users.csv',index=False)
+        logs(self.login,"Edit user :"+self.username.text())
         self.close()
 
     def delete(self):
         df = pd.read_csv('../files/users.csv')
         df = df.drop([self.row],axis = 0)
         df.to_csv('../files/users.csv',index=False)
+        logs(self.login,"Delete user :"+self.username.text())
         self.close()
 
     def cancel(self):
@@ -48,9 +63,9 @@ class EditDialog(QDialog):
 
 
 class AddDialog(QDialog):
-    def __init__(self, parent=None):
+    def __init__(self,login, parent=None):
         super().__init__(parent)
-
+        self.login = login
         self.username = QLineEdit(self)
         self.password = QLineEdit(self)
         self.isadmin = QLineEdit(self)
@@ -72,7 +87,8 @@ class AddDialog(QDialog):
         df = pd.read_csv('../files/users.csv')
         df.loc[df.shape[0]+1] = [self.username.text(),self.password.text(),self.isadmin.text()]
         df.to_csv('../files/users.csv',index=False)
+        logs(self.login,"Add user :"+self.username.text())
         self.close()
-        
+
     def cancel(self):
         self.close()
