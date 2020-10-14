@@ -4,6 +4,7 @@ class Controller:
     def __init__(self):
         self.login = MainApp()
         self.admin = Admin(login = '')
+        self.isadmin = False
 
     def showLogin(self):
         self.login.QTxtLogin.setText('')

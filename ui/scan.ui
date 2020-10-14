@@ -19,33 +19,49 @@
   font-size: 13px;
 }
 
-QLabel {
-border: 15px solid #e1eefa;
-background-color : #e1eefa;
-
+QDialog {
+background-color : #ffffff;
 }
 
-#label_2 {
+#step2, #step3,#step4 {
+border: 15px solid #e1eefa;
+background-color : #e1eefa;
+}
+
+
+#step1{
 border: 15px solid #64de9d;
 background-color : #64de9d;
-
 }
 
 #label {
 border: 3px solid #d9d9d9;
-
 }
 
 QPushButton {
 border: 2px solid #1773a8;
-}</string>
+background: #e1eefa;
+}
+
+#btnLogout {
+  font-family: sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #17a84b;
+  border: 10px;
+  padding: 10px;
+  color: #FFFFFF;
+  font-size: 13px;
+}
+
+</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>80</x>
      <y>110</y>
-     <width>731</width>
+     <width>751</width>
      <height>348</height>
     </rect>
    </property>
@@ -53,7 +69,7 @@ border: 2px solid #1773a8;
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="step1">
         <property name="styleSheet">
          <string notr="true">font: 14pt &quot;Nirmala UI Semilight&quot;;</string>
         </property>
@@ -79,7 +95,7 @@ border: 2px solid #1773a8;
        </spacer>
       </item>
       <item>
-       <widget class="QLabel" name="label_3">
+       <widget class="QLabel" name="step2">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
@@ -126,7 +142,7 @@ border: 2px solid #1773a8;
        </spacer>
       </item>
       <item>
-       <widget class="QLabel" name="label_4">
+       <widget class="QLabel" name="step3">
         <property name="styleSheet">
          <string notr="true">font: 14pt &quot;Nirmala UI Semilight&quot;;</string>
         </property>
@@ -152,7 +168,7 @@ border: 2px solid #1773a8;
        </spacer>
       </item>
       <item>
-       <widget class="QLabel" name="label_5">
+       <widget class="QLabel" name="step4">
         <property name="styleSheet">
          <string notr="true">font: 14pt &quot;Nirmala UI Semilight&quot;;</string>
         </property>
@@ -203,7 +219,7 @@ border: 2px solid #1773a8;
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
    </property>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="btn_I_O">
     <property name="text">
      <string>I/O Monitor</string>
     </property>
@@ -218,7 +234,7 @@ border: 2px solid #1773a8;
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="btnStatistic">
     <property name="text">
      <string>Statistique</string>
     </property>
@@ -234,6 +250,51 @@ border: 2px solid #1773a8;
      </size>
     </property>
    </widget>
+  </widget>
+  <widget class="QPushButton" name="btnLogout">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>510</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Logout</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="usernameLabel">
+   <property name="geometry">
+    <rect>
+     <x>700</x>
+     <y>30</y>
+     <width>131</width>
+     <height>49</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+   </property>
+   <property name="text">
+    <string>UserName</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="dateLabel">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>30</y>
+     <width>211</width>
+     <height>49</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+   </property>
+   <property name="text">
+    <string>date</string>
+   </property>
   </widget>
  </widget>
  <resources/>
