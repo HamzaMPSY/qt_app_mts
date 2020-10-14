@@ -28,6 +28,17 @@ background-color : #ffffff;
   color: #FFFFFF;
   font-size: 13px;
 }
+
+#btnRv {
+	font: 10pt &quot;Segoe UI&quot;;
+  text-transform: uppercase;
+  outline: 0;
+  background: #fc433c;
+  border: 10px;
+  padding: 10px;
+  color: #FFFFFF;
+  font-size: 13px;
+}
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -45,6 +56,19 @@ background-color : #ffffff;
     </property>
     <property name="pixmap">
      <pixmap>../assets/logo-scroll_resized.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="btnRv">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>420</y>
+      <width>200</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Waiting code from PLC ...</string>
     </property>
    </widget>
    <widget class="QSplitter" name="splitter">
