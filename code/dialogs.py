@@ -16,13 +16,17 @@ def logs(username, action):
     logs.close()
 
 class EditDialog(QDialog):
-    def __init__(self, username,password,isadmin,row,login, parent=None):
+    def __init__(self,row,login, parent=None):
         super().__init__(parent)
         self.login = login
         self.username = QLineEdit(self)
         self.password = QLineEdit(self)
         self.isadmin = QLineEdit(self)
         self.row=row
+        res = pd.read_csv('../files/users.csv').iloc[row,:]
+        username = res['username']
+        password = res['password']
+        isadmin = res['isadmin']
         self.username.setText(username)
         self.password.setText(password)
         self.isadmin.setText(str(isadmin))
@@ -88,6 +92,42 @@ class AddDialog(QDialog):
         df.loc[df.shape[0]+1] = [self.username.text(),self.password.text(),self.isadmin.text()]
         df.to_csv('../files/users.csv',index=False)
         logs(self.login,"Add user :"+self.username.text())
+        self.close()
+
+    def cancel(self):
+        self.close()
+
+class PinDialog(QDialog):
+    def __init__(self,row,login, parent=None):
+        super().__init__(parent)
+        self.login = login
+        self.purpose = QLineEdit(self)
+        self.name = QLineEdit(self)
+        self.row=row
+        res = pd.read_csv('../files/pins.csv').iloc[row,:]
+        purpose = res['purpose']
+        name = res['name']
+        self.purpose.setText(purpose)
+        self.name.setText(name)
+       
+        buttonBox = QDialogButtonBox(Qt.Horizontal)
+        buttonBox.addButton("Save", QDialogButtonBox.AcceptRole)
+        buttonBox.addButton("Cancel", QDialogButtonBox.RejectRole)
+
+        layout = QFormLayout(self)
+        layout.addRow("Purpose :", self.purpose)
+        layout.addRow("Name :", self.name)
+        layout.addWidget(buttonBox)
+
+        buttonBox.accepted.connect(self.save)
+        buttonBox.rejected.connect(self.cancel)
+
+    def save(self):
+        df = pd.read_csv('../files/pins.csv')
+        df.ix[self.row,'purpose'] = self.purpose.text()
+        df.ix[self.row,'name'] = self.name.text()
+        df.to_csv('../files/pins.csv',index=False)
+        logs(self.login,"Edit user :"+self.purpose.text())
         self.close()
 
     def cancel(self):

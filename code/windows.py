@@ -66,7 +66,6 @@ class MainApp(QMainWindow,LOGIN_UI):
 
 class Admin(QMainWindow,ADMIN_UI):
     switchWindow = pyqtSignal()
-    click_flag = True
     def __init__(self, login,arg=None,):
         super(Admin, self).__init__(arg)
         QWidget.__init__(self)
@@ -75,6 +74,8 @@ class Admin(QMainWindow,ADMIN_UI):
         self.handleUI()
         self.handleButtons()
         self.handleHeaders()
+        self.users_click_flag = True
+        self.pins_click_flag = True
 
     def handleUI(self):
         self.setWindowTitle('MTS Scanner : Admin Control Panel')
@@ -84,9 +85,10 @@ class Admin(QMainWindow,ADMIN_UI):
     def handleButtons(self):
         self.btnlogout.clicked.connect(self.logout)
         self.btnusers.clicked.connect(self.users)
-        self.btnhistory.clicked.connect(self.historys)
+        self.btnhistory.clicked.connect(self.history)
         self.btnadduser.hide()
         self.btnadduser.clicked.connect(self.adduser)
+        self.btnpins.clicked.connect(self.pins)
 
     def handleHeaders(self):
         date = datetime.datetime.now()
@@ -104,28 +106,33 @@ class Admin(QMainWindow,ADMIN_UI):
         self.tableView.setModel(model)
         self.tableView.horizontalHeader().setStretchLastSection(True) 
         self.tableView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        if self.click_flag:
+        if self.users_click_flag:
+            try:
+                self.tableView.clicked.disconnect()
+            except Exception:
+                pass
             self.tableView.clicked.connect(self.modifyUser)
-            self.click_flag = False
+            self.users_click_flag = False
+        self.pins_click_flag = True
 
-    def historys(self):
+    def history(self):
         self.btnadduser.hide()
         logs = pd.read_csv('../files/logins.csv')
         model = pandasModel(logs)
         self.tableView.setModel(model)
         self.tableView.horizontalHeader().setStretchLastSection(True) 
         self.tableView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.tableView.clicked.disconnect()
-        self.click_flag = True
+        try:
+            self.tableView.clicked.disconnect()
+        except Exception:
+            pass
+        self.users_click_flag = True
+        self.pins_click_flag = True
 
         
     def modifyUser(self,item):
         row = item.row()
-        res = pd.read_csv('../files/users.csv').iloc[row,:]
-        username = res['username']
-        password = res['password']
-        isadmin = res['isadmin']
-        editDialog = EditDialog(username,password,isadmin,row,self.login)
+        editDialog = EditDialog(row,self.login)
         editDialog.exec_()
         editDialog.close()
         self.users()
@@ -135,3 +142,26 @@ class Admin(QMainWindow,ADMIN_UI):
         editDialog.exec_()
         editDialog.close()
         self.users()
+
+    def pins(self):
+        self.btnadduser.hide()
+        pins = pd.read_csv('../files/pins.csv')
+        model = pandasModel(pins)
+        self.tableView.setModel(model)
+        self.tableView.horizontalHeader().setStretchLastSection(True) 
+        self.tableView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        if self.pins_click_flag:
+            try:
+                self.tableView.clicked.disconnect()
+            except Exception:
+                pass
+            self.tableView.clicked.connect(self.modifypin)
+            self.pins_click_flag = False
+        self.users_click_flag = True
+
+    def modifypin(self,item):
+        row = item.row()
+        editDialog = PinDialog(row,self.login)
+        editDialog.exec_()
+        editDialog.close()
+        self.pins()
