@@ -275,3 +275,4 @@ class User(QMainWindow,USER_UI):
 
     def recieveData(self,data):
         self.btnRv.setText(data)
+        self.btnRv.setStyleSheet("background-color:#ff0000;")

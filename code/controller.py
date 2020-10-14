@@ -8,7 +8,7 @@ class Controller:
         self.login = MainApp()
         self.admin = Admin(login = '')
         self.user = User(login = '')
-        self.serialPort = SerialPort()
+        
 
     def showLogin(self):
         self.login.QTxtLogin.setText('')
@@ -27,6 +27,7 @@ class Controller:
             self.login.close()
             self.admin.show()
         else :
+            self.serialPort = SerialPort()
             self.user = User(login = text)
             self.user.switchWindow.connect(self.showLogin)
             self.user.sendOutput.connect(self.sendToOutput)
