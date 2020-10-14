@@ -209,3 +209,31 @@ class EditRefDialog(QDialog):
     def cancel(self):
         self.close()
 
+class AddPinDialog(QDialog):
+    def __init__(self,login, parent=None):
+        super().__init__(parent)
+        self.login = login
+        self.purpose = QLineEdit(self)
+        self.name = QLineEdit(self)
+        
+        buttonBox = QDialogButtonBox(Qt.Horizontal)
+        buttonBox.addButton("Save", QDialogButtonBox.AcceptRole)
+        buttonBox.addButton("Cancel", QDialogButtonBox.RejectRole)
+
+        layout = QFormLayout(self)
+        layout.addRow("Purpose :", self.purpose)
+        layout.addRow("Name :", self.name)
+        layout.addWidget(buttonBox)
+
+        buttonBox.accepted.connect(self.save)
+        buttonBox.rejected.connect(self.cancel)
+
+    def save(self):
+        df = pd.read_csv('../files/pins.csv')
+        df.loc[df.shape[0]+1] = [self.purpose.text(),self.name.text()]
+        df.to_csv('../files/pins.csv',index=False)
+        logs(self.login,"Add pin :"+self.purpose.text())
+        self.close()
+
+    def cancel(self):
+        self.close()

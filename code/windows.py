@@ -141,18 +141,28 @@ class Admin(QMainWindow,ADMIN_UI):
     def modifyUser(self,item):
         row = item.row()
         editDialog = EditDialog(row,self.login)
+        editDialog.setWindowTitle('Edit User')
+        editDialog.setWindowIcon(QIcon('../assets/logo-scroll.png'))
         editDialog.exec_()
         editDialog.close()
         self.users()
 
     def adduser(self):
-        editDialog = AddDialog(self.login)
-        editDialog.exec_()
-        editDialog.close()
+        addUserDialog = AddDialog(self.login)
+        addUserDialog.setWindowTitle('Add User')
+        addUserDialog.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        addUserDialog.exec_()
+        addUserDialog.close()
         self.users()
 
     def pins(self):
-        self.btnadduser.hide()
+        self.btnadduser.show()
+        self.btnadduser.setText('add pin')
+        try:
+            self.btnadduser.clicked.disconnect()
+        except Exception :
+            pass
+        self.btnadduser.clicked.connect(self.addpin)
         pins = pd.read_csv('../files/pins.csv')
         model = pandasModel(pins)
         self.tableView.setModel(model)
@@ -170,15 +180,24 @@ class Admin(QMainWindow,ADMIN_UI):
 
     def modifypin(self,item):
         row = item.row()
-        editDialog = PinDialog(row,self.login)
-        editDialog.exec_()
-        editDialog.close()
+        editPin = PinDialog(row,self.login)
+        editPin.setWindowTitle('Edit Pin')
+        editPin.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        editPin.exec_()
+        editPin.close()
+        self.pins()
+
+    def addpin(self):
+        addPin = AddPinDialog(self.login)
+        addPin.setWindowTitle('Add Pin')
+        addPin.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        addPin.exec_()
+        addPin.close()
         self.pins()
 
     def references(self):
         self.btnadduser.show()
         self.btnadduser.setText('add refrerence')
-
         try:
             self.btnadduser.clicked.disconnect()
         except Exception :
@@ -201,15 +220,19 @@ class Admin(QMainWindow,ADMIN_UI):
 
     def modifyref(self,item):
         row = item.row()
-        editDialog = EditRefDialog(row,self.login)
-        editDialog.exec_()
-        editDialog.close()
+        editRef = EditRefDialog(row,self.login)
+        editRef.setWindowTitle('Edit Reference')
+        editRef.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        editRef.exec_()
+        editRef.close()
         self.references()
 
     def addrefrence(self):
-        editDialog = AddRefDialog(self.login)
-        editDialog.exec_()
-        editDialog.close()
+        addRef = AddRefDialog(self.login)
+        addRef.setWindowTitle('Add Reference')
+        addRef.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        addRef.exec_()
+        addRef.close()
         self.references()
 
 class User(QMainWindow,USER_UI):
@@ -249,3 +272,6 @@ class User(QMainWindow,USER_UI):
             QMessageBox.warning(self,"Error","Please fill referece product field!")
         else:
             self.sendOutput.emit(tosend)
+
+    def recieveData(self,data):
+        self.btnRv.setText('I recieved :',data.decode())

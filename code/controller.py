@@ -1,13 +1,14 @@
 from windows import *
 import pandas as pd
-import serial
+from SerialPort import *
+
 
 class Controller:
     def __init__(self):
         self.login = MainApp()
         self.admin = Admin(login = '')
         self.user = User(login = '')
-        self.conectToSrial()
+        self.serialPort = SerialPort()
 
     def showLogin(self):
         self.login.QTxtLogin.setText('')
@@ -26,29 +27,17 @@ class Controller:
             self.login.close()
             self.admin.show()
         else :
-            self.conectToSrial()
             self.user = User(login = text)
             self.user.switchWindow.connect(self.showLogin)
             self.user.sendOutput.connect(self.sendToOutput)
+            self.serialThread = QThread()
+            self.serialPort.moveToThread(self.serialThread)
+            self.serialPort.signal.connect(self.user.recieveData)
+            self.serialThread.started.connect(self.serialPort.readSerialPort)
+            self.serialThread.start()
             self.login.close()
             self.user.show()
 
-    def conectToSrial(self):
-        pins = pd.read_csv('../files/pins.csv')
-        res = pins[(pins['purpose'] == 'output')]
-        self.outputName = res['name'].item()
-        try:
-            self.ComPort = serial.Serial(self.outputName)
-        except Exception :
-            print('could not open port "%s"'%self.outputName)
-        
-    
-    def sendToOutput(self,text):
-        references = pd.read_csv('../files/references.csv')
-        res = references[(references['reference'] == text)]
-        data = res['code'].item()
-        try:
-            self.ComPort.write(data.encode())
-        except Exception :
-            print('could not send to port "%s"'%self.outputName)
-        
+    def sendToOutput(self,data):
+        print('[+]Sending',data,'to serial port')
+        self.serialPort.writeSerialPort(data)
