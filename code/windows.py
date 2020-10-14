@@ -13,6 +13,7 @@ import os
 
 LOGIN_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/login.ui"))
 ADMIN_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/admin.ui"))
+USER_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/user.ui"))
 
 def logs(username, action):
     path = '../files/logins.csv'
@@ -55,17 +56,15 @@ class MainApp(QMainWindow,LOGIN_UI):
             users = pd.read_csv('../files/users.csv')
             res = users[(users['username'] == login) & (users['password'] == password)]
             if res.shape[0] >= 1 :
-                logs(login, "login")
-                if res['isadmin'].item() == 1: 
-                    self.switchWindow.emit(login)
-                else:
-                    QMessageBox.information(self,"Mazal maderna blasa lik ","Tsena tatsnsaliw admin")
+                logs(login, "login") 
+                self.switchWindow.emit(login)
             else:
                 QMessageBox.warning(self,"Error","Login or Password incorrect!")
         
 
 class Admin(QMainWindow,ADMIN_UI):
     switchWindow = pyqtSignal()
+
     def __init__(self, login,arg=None,):
         super(Admin, self).__init__(arg)
         QWidget.__init__(self)
@@ -165,3 +164,43 @@ class Admin(QMainWindow,ADMIN_UI):
         editDialog.exec_()
         editDialog.close()
         self.pins()
+
+
+
+class User(QMainWindow,USER_UI):
+    switchWindow = pyqtSignal()
+    sendOutput = pyqtSignal(str)
+
+    def __init__(self, login,arg=None,):
+        super(User, self).__init__(arg)
+        QWidget.__init__(self)
+        self.setupUi(self)
+        self.login = login
+        self.handleUI()
+        self.handleButtons()
+        self.handleHeaders()
+
+    def handleUI(self):
+        self.setWindowTitle('MTS Scanner : User')
+        self.setFixedSize(900,575)
+        self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+
+    def handleButtons(self):
+        self.btnLogout.clicked.connect(self.logout)
+        self.btnSend.clicked.connect(self.send)
+
+    def handleHeaders(self):
+        date = datetime.datetime.now()
+        self.dateLabel.setText(date.strftime("%Y/%m/%d, %H:%M"))
+        self.usernameLabel.setText(self.login)
+
+    def logout(self):
+        logs(self.login, "logout")
+        self.switchWindow.emit()
+
+    def send(self):
+        tosend = self.lineEdit.text()
+        if tosend == '':
+            QMessageBox.warning(self,"Error","Please fill referece product field!")
+        else:
+            self.sendOutput.emit(tosend)

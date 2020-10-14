@@ -1,6 +1,3 @@
 username,password,isadmin
-hamza,hamza,1
-otman,otman,1
-afro,afro,0
 admin,admin,1
-new,new,1
+user,user,0

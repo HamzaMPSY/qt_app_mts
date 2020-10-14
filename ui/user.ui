@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>900</width>
+    <height>575</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,6 +29,17 @@ background-color : #ffffff;
   font-size: 13px;
 }
 
+#btnLogout {
+  font-family: sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #17a84b;
+  border: 10px;
+  padding: 10px;
+  color: #FFFFFF;
+  font-size: 13px;
+}
+
 #btnRv {
 	font: 10pt &quot;Segoe UI&quot;;
   text-transform: uppercase;
@@ -39,14 +50,25 @@ background-color : #ffffff;
   color: #FFFFFF;
   font-size: 13px;
 }
+
+QLabel{
+  font-family: sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #ffffff;
+  border: 10px;
+  padding: 5px;
+  color: #1773a8;
+  font-size: 15px;
+}
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>10</y>
+      <x>370</x>
+      <y>50</y>
       <width>141</width>
       <height>151</height>
      </rect>
@@ -61,8 +83,8 @@ background-color : #ffffff;
    <widget class="QLabel" name="btnRv">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>420</y>
+      <x>340</x>
+      <y>410</y>
       <width>200</width>
       <height>40</height>
      </rect>
@@ -74,8 +96,8 @@ background-color : #ffffff;
    <widget class="QSplitter" name="splitter">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>270</y>
+      <x>270</x>
+      <y>260</y>
       <width>441</width>
       <height>51</height>
      </rect>
@@ -96,6 +118,51 @@ background-color : #ffffff;
       <string>send</string>
      </property>
     </widget>
+   </widget>
+   <widget class="QLabel" name="usernameLabel">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>10</y>
+      <width>131</width>
+      <height>49</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+    </property>
+    <property name="text">
+     <string>UserName</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnLogout">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>520</y>
+      <width>121</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Logout</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="dateLabel">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>211</width>
+      <height>49</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+    </property>
+    <property name="text">
+     <string>date</string>
+    </property>
    </widget>
   </widget>
  </widget>

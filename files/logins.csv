@@ -3,42 +3,8 @@ admin,2020/10/13 23:28,login
 admin,2020/10/13 23:28,login
 admin,2020/10/13 23:28,login
 admin,2020/10/13 23:28,login
-admin,2020/10/13 23:29,login
-admin,2020/10/13 23:30,logout
-admin,2020/10/13 23:30,login
-admin,2020/10/13 23:30,logout
-admin,2020/10/13 23:30,login
-admin,2020/10/13 23:30,login
-admin,2020/10/13 23:31,login
-admin,2020/10/13 23:34,login
-admin,2020/10/13 23:34,logout
-admin,2020/10/13 23:53,login
-admin,2020/10/13 23:54,login
-admin,2020/10/13 23:55,login
-admin,2020/10/13 23:55,Delete user :omar
-admin,2020/10/13 23:55,Edit user :hamza
-admin,2020/10/13 23:55,Edit user :otman
-admin,2020/10/13 23:55,Edit user :admin
-admin,2020/10/13 23:55,Add user :afro
-admin,2020/10/14 00:00,login
-admin,2020/10/14 00:03,login
-admin,2020/10/14 00:05,login
-admin,2020/10/14 00:08,login
-admin,2020/10/14 00:09,login
-admin,2020/10/14 00:09,logout
-admin,2020/10/14 11:44,login
-admin,2020/10/14 11:45,login
-admin,2020/10/14 12:46,login
-admin,2020/10/14 13:05,login
-admin,2020/10/14 13:07,login
-admin,2020/10/14 13:07,Delete user :admin
-admin,2020/10/14 13:07,Add user :admin
-admin,2020/10/14 13:18,login
-admin,2020/10/14 13:18,Edit user :otman
-admin,2020/10/14 13:18,Edit user :afro
-admin,2020/10/14 13:18,Add user :new
-admin,2020/10/14 13:19,Edit user :i
-admin,2020/10/14 13:19,Edit user :input
-admin,2020/10/14 13:19,Edit user :output
-admin,2020/10/14 13:20,logout
-afro,2020/10/14 13:20,login
+user,2020/10/14 14:24,login
+user,2020/10/14 14:24,logout
+admin,2020/10/14 14:24,login
+admin,2020/10/14 14:24,logout
+user,2020/10/14 14:28,login
