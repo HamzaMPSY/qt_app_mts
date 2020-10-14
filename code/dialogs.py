@@ -132,3 +132,80 @@ class PinDialog(QDialog):
 
     def cancel(self):
         self.close()
+
+
+class AddRefDialog(QDialog):
+    def __init__(self,login, parent=None):
+        super().__init__(parent)
+        self.login = login
+        self.reference = QLineEdit(self)
+        self.code = QLineEdit(self)
+        
+        buttonBox = QDialogButtonBox(Qt.Horizontal)
+        buttonBox.addButton("Save", QDialogButtonBox.AcceptRole)
+        buttonBox.addButton("Cancel", QDialogButtonBox.RejectRole)
+
+        layout = QFormLayout(self)
+        layout.addRow("Reference :", self.reference)
+        layout.addRow("Code :", self.code)
+        layout.addWidget(buttonBox)
+
+        buttonBox.accepted.connect(self.save)
+        buttonBox.rejected.connect(self.cancel)
+
+    def save(self):
+        df = pd.read_csv('../files/references.csv')
+        df.loc[df.shape[0]+1] = [self.reference.text(),self.code.text()]
+        df.to_csv('../files/references.csv',index=False)
+        logs(self.login,"Add reference :"+self.reference.text())
+        self.close()
+
+    def cancel(self):
+        self.close()
+
+
+class EditRefDialog(QDialog):
+    def __init__(self,row,login, parent=None):
+        super().__init__(parent)
+        self.login = login
+        self.reference = QLineEdit(self)
+        self.code = QLineEdit(self)
+        self.row=row
+        res = pd.read_csv('../files/references.csv').iloc[row,:]
+        reference = res['reference']
+        code = res['code']
+        self.reference.setText(reference)
+        self.code.setText(str(code))
+        
+        buttonBox = QDialogButtonBox(Qt.Horizontal)
+        buttonBox.addButton("Save", QDialogButtonBox.AcceptRole)
+        buttonBox.addButton("Delete", QDialogButtonBox.HelpRole)
+        buttonBox.addButton("Cancel", QDialogButtonBox.RejectRole)
+
+        layout = QFormLayout(self)
+        layout.addRow("reference :", self.reference)
+        layout.addRow("code :", self.code)
+        layout.addWidget(buttonBox)
+
+        buttonBox.accepted.connect(self.save)
+        buttonBox.rejected.connect(self.cancel)
+        buttonBox.helpRequested.connect(self.delete)
+
+    def save(self):
+        df = pd.read_csv('../files/references.csv')
+        df.ix[self.row,'reference'] = self.reference.text()
+        df.ix[self.row,'code'] = self.code.text()
+        df.to_csv('../files/references.csv',index=False)
+        logs(self.login,"Edit Reference :"+self.reference.text())
+        self.close()
+
+    def delete(self):
+        df = pd.read_csv('../files/references.csv')
+        df = df.drop([self.row],axis = 0)
+        df.to_csv('../files/references.csv',index=False)
+        logs(self.login,"Delete Reference :"+self.reference.text())
+        self.close()
+
+    def cancel(self):
+        self.close()
+

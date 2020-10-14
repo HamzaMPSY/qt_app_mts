@@ -40,7 +40,7 @@ class Controller:
         try:
             self.ComPort = serial.Serial(self.outputName)
         except Exception :
-            print('could not open port "{1}"',self.outputName)
+            print('could not open port "%s"'%self.outputName)
         
     
     def sendToOutput(self,text):
@@ -50,5 +50,5 @@ class Controller:
         try:
             self.ComPort.write(data.encode())
         except Exception :
-            print('could not send to port "{1}"',self.outputName)
+            print('could not send to port "%s"'%self.outputName)
         

@@ -75,6 +75,7 @@ class Admin(QMainWindow,ADMIN_UI):
         self.handleHeaders()
         self.users_click_flag = True
         self.pins_click_flag = True
+        self.ref_click_flag = True
 
     def handleUI(self):
         self.setWindowTitle('MTS Scanner : Admin Control Panel')
@@ -86,8 +87,8 @@ class Admin(QMainWindow,ADMIN_UI):
         self.btnusers.clicked.connect(self.users)
         self.btnhistory.clicked.connect(self.history)
         self.btnadduser.hide()
-        self.btnadduser.clicked.connect(self.adduser)
         self.btnpins.clicked.connect(self.pins)
+        self.btnreferences.clicked.connect(self.references)
 
     def handleHeaders(self):
         date = datetime.datetime.now()
@@ -100,6 +101,12 @@ class Admin(QMainWindow,ADMIN_UI):
 
     def users(self):
         self.btnadduser.show()
+        self.btnadduser.setText('Add user')
+        try:
+            self.btnadduser.clicked.disconnect()
+        except Exception :
+            pass
+        self.btnadduser.clicked.connect(self.adduser)
         users = pd.read_csv('../files/users.csv')
         model = pandasModel(users)
         self.tableView.setModel(model)
@@ -113,6 +120,7 @@ class Admin(QMainWindow,ADMIN_UI):
             self.tableView.clicked.connect(self.modifyUser)
             self.users_click_flag = False
         self.pins_click_flag = True
+        self.ref_click_flag = True
 
     def history(self):
         self.btnadduser.hide()
@@ -127,6 +135,7 @@ class Admin(QMainWindow,ADMIN_UI):
             pass
         self.users_click_flag = True
         self.pins_click_flag = True
+        self.ref_click_flag = True
 
         
     def modifyUser(self,item):
@@ -157,6 +166,7 @@ class Admin(QMainWindow,ADMIN_UI):
             self.tableView.clicked.connect(self.modifypin)
             self.pins_click_flag = False
         self.users_click_flag = True
+        self.ref_click_flag = True
 
     def modifypin(self,item):
         row = item.row()
@@ -165,7 +175,42 @@ class Admin(QMainWindow,ADMIN_UI):
         editDialog.close()
         self.pins()
 
+    def references(self):
+        self.btnadduser.show()
+        self.btnadduser.setText('add refrerence')
 
+        try:
+            self.btnadduser.clicked.disconnect()
+        except Exception :
+            pass
+        self.btnadduser.clicked.connect(self.addrefrence)
+        refereces = pd.read_csv('../files/references.csv')
+        model = pandasModel(refereces)
+        self.tableView.setModel(model)
+        self.tableView.horizontalHeader().setStretchLastSection(True) 
+        self.tableView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        if self.ref_click_flag:
+            try:
+                self.tableView.clicked.disconnect()
+            except Exception:
+                pass
+            self.tableView.clicked.connect(self.modifyref)
+            self.ref_click_flag = False
+        self.users_click_flag = True
+        self.pins_click_flag = True
+
+    def modifyref(self,item):
+        row = item.row()
+        editDialog = EditRefDialog(row,self.login)
+        editDialog.exec_()
+        editDialog.close()
+        self.references()
+
+    def addrefrence(self):
+        editDialog = AddRefDialog(self.login)
+        editDialog.exec_()
+        editDialog.close()
+        self.references()
 
 class User(QMainWindow,USER_UI):
     switchWindow = pyqtSignal()

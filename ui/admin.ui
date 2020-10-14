@@ -73,9 +73,9 @@ QTableView{
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="btninfo">
+      <widget class="QPushButton" name="btnreferences">
        <property name="text">
-        <string>info</string>
+        <string>References</string>
        </property>
       </widget>
      </item>
@@ -171,7 +171,7 @@ QTableView{
      <x>0</x>
      <y>0</y>
      <width>900</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
