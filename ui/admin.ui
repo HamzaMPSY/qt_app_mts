@@ -38,6 +38,13 @@ QLabel{
 QMainWindow{
   background: #ffffff;
 
+}
+QHeaderView {
+ font-size: 14pt;
+ font: 10pt &quot;OCR A Extended&quot;;
+ }
+QTableView{
+ font: 10pt &quot;Yu Gothic UI&quot;;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -164,7 +171,7 @@ QMainWindow{
      <x>0</x>
      <y>0</y>
      <width>900</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
