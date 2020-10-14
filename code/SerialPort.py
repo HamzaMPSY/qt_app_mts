@@ -26,9 +26,11 @@ class SerialPort(QObject):
         if self.ComPort is not None:
             while True:
                 readOut = self.ComPort.read(268)  # Reads # Bytes
-                r = binascii.hexlify(readOut).decode('ascii')
-                print(r)
-                self.signal.emit(r)
+                # r = binascii.hexlify(readOut).decode('ascii')
+                print(readOut)
+                data = readOut.decode()
+                if data != "":
+                    self.signal.emit(data)
                 time.sleep(1)
             if not self.ComPort.isOpen():
                 print("Serial Port is Close")

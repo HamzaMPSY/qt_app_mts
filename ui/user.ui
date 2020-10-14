@@ -85,8 +85,8 @@ QLabel{
      <rect>
       <x>340</x>
       <y>410</y>
-      <width>200</width>
-      <height>40</height>
+      <width>251</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="text">

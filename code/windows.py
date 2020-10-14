@@ -274,4 +274,4 @@ class User(QMainWindow,USER_UI):
             self.sendOutput.emit(tosend)
 
     def recieveData(self,data):
-        self.btnRv.setText('I recieved :',data.decode())
+        self.btnRv.setText(data)
