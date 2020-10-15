@@ -9,7 +9,7 @@ class SerialPort(QObject):
         super(SerialPort, self).__init__(parent)
         #initialization and open the port
         pins = pd.read_csv('../files/pins.csv')
-        res = pins[(pins['purpose'] == 'output')]
+        res = pins[(pins['purpose'] == 'plc')]
         self.portName = res['name'].item()
         self.ComPort = None
         self.portConnect()
@@ -31,8 +31,8 @@ class SerialPort(QObject):
                 try:
                     readOut = self.ComPort.read(268)  # Reads # Bytes
                     # r = binascii.hexlify(readOut).decode('ascii')
+                    data = readOut.decode().strip()
                     print(readOut)
-                    data = readOut.decode()
                     if data != "":
                         self.signal.emit(data)
                     time.sleep(1)

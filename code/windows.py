@@ -8,6 +8,7 @@ import datetime
 from pandasModel import *
 from dialogs import *
 import os
+import time
 
 
 
@@ -275,4 +276,5 @@ class User(QMainWindow,USER_UI):
 
     def recieveData(self,data):
         self.btnRv.setText(data)
-        self.btnRv.setStyleSheet("background-color:#ff0000;")
+        self.btnRv.setStyleSheet("background-color: lightgreen")
+        time.sleep(0.5)

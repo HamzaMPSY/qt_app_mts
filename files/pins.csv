@@ -1,3 +1,4 @@
 purpose,name
-input,COM1
-output,COM5
+Scanner,COM1
+plc,COM5
+plc1,COM2
