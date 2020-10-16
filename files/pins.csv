@@ -1,4 +1,3 @@
 purpose,name
 Scanner,COM1
-plc,COM5
-plc1,COM2
+PLC,COM5

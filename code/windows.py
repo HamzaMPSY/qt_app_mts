@@ -36,6 +36,7 @@ class MainApp(QMainWindow,LOGIN_UI):
     def __init__(self, arg=None):
         super(MainApp, self).__init__(arg)
         QMainWindow.__init__(self)
+        self.loaded = False
         self.setupUi(self)
         self.handleUI()
         self.handleLogin()
@@ -70,6 +71,7 @@ class Admin(QMainWindow,ADMIN_UI):
         super(Admin, self).__init__(arg)
         QWidget.__init__(self)
         self.setupUi(self)
+        self.loaded = False
         self.login = login
         self.handleUI()
         self.handleButtons()
@@ -245,6 +247,7 @@ class User(QMainWindow,USER_UI):
         QWidget.__init__(self)
         self.setupUi(self)
         self.login = login
+        self.loaded = False
         self.handleUI()
         self.handleButtons()
         self.handleHeaders()

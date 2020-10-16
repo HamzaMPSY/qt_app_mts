@@ -2,4 +2,3 @@ username,password,isadmin
 admin,admin,1
 user,user,0
 test,test,0
-admin1,admin1,0

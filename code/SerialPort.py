@@ -9,7 +9,7 @@ class SerialPort(QObject):
         super(SerialPort, self).__init__(parent)
         #initialization and open the port
         pins = pd.read_csv('../files/pins.csv')
-        res = pins[(pins['purpose'] == 'plc')]
+        res = pins[(pins['purpose'] == 'PLC')]
         self.portName = res['name'].item()
         self.ComPort = None
         self.portConnect()
@@ -23,24 +23,21 @@ class SerialPort(QObject):
     # Explicit signal
     signal = pyqtSignal(str)
 
-    #@pyqtSlot(str)
     def readSerialPort(self):
-        print ("Starting up...")
+        print ("Start reading from port")
         if self.ComPort is not None:
             while True:
                 try:
-                    readOut = self.ComPort.read(268)  # Reads # Bytes
-                    # r = binascii.hexlify(readOut).decode('ascii')
+                    readOut = self.ComPort.read(268)
                     data = readOut.decode().strip()
                     print(readOut)
                     if data != "":
                         self.signal.emit(data)
-                    time.sleep(1)
                 except Exception as e:
                     self.portConnect()
-                    time.sleep(1)
-            if not self.ComPort.isOpen():
-                print("Serial Port is Close")
+
+                time.sleep(1)
+        print ("Finish reading from port")
     
     def writeSerialPort(self,data):
         if self.ComPort is not None:

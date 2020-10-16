@@ -112,7 +112,9 @@ class PinDialog(QDialog):
        
         buttonBox = QDialogButtonBox(Qt.Horizontal)
         buttonBox.addButton("Save", QDialogButtonBox.AcceptRole)
+        buttonBox.addButton("Delete", QDialogButtonBox.HelpRole)
         buttonBox.addButton("Cancel", QDialogButtonBox.RejectRole)
+
 
         layout = QFormLayout(self)
         layout.addRow("Purpose :", self.purpose)
@@ -121,16 +123,25 @@ class PinDialog(QDialog):
 
         buttonBox.accepted.connect(self.save)
         buttonBox.rejected.connect(self.cancel)
+        buttonBox.helpRequested.connect(self.delete)
+
 
     def save(self):
         df = pd.read_csv('../files/pins.csv')
         df.ix[self.row,'purpose'] = self.purpose.text()
         df.ix[self.row,'name'] = self.name.text()
         df.to_csv('../files/pins.csv',index=False)
-        logs(self.login,"Edit user :"+self.purpose.text())
+        logs(self.login,"Edit pin :"+self.purpose.text())
         self.close()
 
     def cancel(self):
+        self.close()
+
+    def delete(self):
+        df = pd.read_csv('../files/pins.csv')
+        df = df.drop([self.row],axis = 0)
+        df.to_csv('../files/pins.csv',index=False)
+        logs(self.login,"Delete pin :"+self.purpose.text())
         self.close()
 
 
