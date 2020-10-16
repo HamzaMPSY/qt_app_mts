@@ -40,5 +40,9 @@ class SerialPort(QObject):
         print ("Finish reading from port")
     
     def writeSerialPort(self,data):
-        if self.ComPort is not None:
-            self.ComPort.write(data.encode())
+        try:
+            if self.ComPort is not None:
+                self.ComPort.write(data.encode())
+        except Exception as e:
+            print("Port not connect yet")
+            # self.portConnect()
