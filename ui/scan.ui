@@ -18,16 +18,11 @@
 background-color : #ffffff;
 }
 
-#step2, #step3,#step4 {
+#step1,#step2, #step3,#step4 {
 border: 15px solid #e1eefa;
 background-color : #e1eefa;
 }
 
-
-#step1{
-border: 15px solid #64de9d;
-background-color : #64de9d;
-}
 
 #label {
 border: 3px solid #d9d9d9;

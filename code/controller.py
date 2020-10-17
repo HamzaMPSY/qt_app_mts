@@ -62,14 +62,13 @@ class Controller:
         self.scan.handleHeaders()
         if not self.scan.loaded:
             self.scan.switchWindow.connect(self.showUser)
-            # self.user.sendOutput.connect(self.sendToOutput)
             self.scan.loaded = True
 
-        #self.serialPort = SerialPort()
-        #self.serialPort.moveToThread(self.serialThread)
-        #self.serialPort.signal.connect(self.user.recieveData)
-        #self.serialThread.started.connect(self.serialPort.readSerialPort)
-        #self.serialThread.setTerminationEnabled(True)
-        #self.serialThread.start()
+        self.serialPort = SerialPort()
+        self.serialPort.moveToThread(self.serialThread)
+        self.serialPort.signal.connect(self.scan.recieveData)
+        self.serialThread.started.connect(self.serialPort.readSerialPort)
+        self.serialThread.setTerminationEnabled(True)
+        self.serialThread.start()
         self.user.close()
         self.scan.show()

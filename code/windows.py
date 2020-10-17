@@ -345,9 +345,13 @@ class Scan(QMainWindow,SCAN_UI):
     def statistics(self):
         pass
 
-
     def recieveData(self,data):
-        #self.btnRv.setText(data)
-        #self.btnRv.setStyleSheet("background-color: lightgreen")
-        #time.sleep(0.5)
-        pass
+        if data == 'step1':
+            self.step1.setStyleSheet('{border: 15px solid #64de9d;background-color : #64de9d;}')
+        elif data == 'step2':
+            self.step2.setStyleSheet('{border: 15px solid #64de9d;background-color : #64de9d;}')
+        elif data == 'step3':
+            self.step3.setStyleSheet('{border: 15px solid #64de9d;background-color : #64de9d;}')
+        elif data == 'step4':
+            self.step4.setStyleSheet('{border: 15px solid #64de9d;background-color : #64de9d;}')
+            # to do increment qt / add history / progress bar / sleep(3) / setsttyle  
