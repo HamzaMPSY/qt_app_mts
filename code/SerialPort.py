@@ -45,4 +45,3 @@ class SerialPort(QObject):
                 self.ComPort.write(data.encode())
         except Exception as e:
             print("Port not connect yet")
-            # self.portConnect() 
