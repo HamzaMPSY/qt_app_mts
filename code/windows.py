@@ -15,6 +15,8 @@ import time
 LOGIN_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/login.ui"))
 ADMIN_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/admin.ui"))
 USER_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/user.ui"))
+SCAN_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/scan.ui"))
+
 
 def logs(username, action):
     path = '../files/logins.csv'
@@ -240,7 +242,7 @@ class Admin(QMainWindow,ADMIN_UI):
 
 class User(QMainWindow,USER_UI):
     switchWindow = pyqtSignal()
-    
+    switchWindow2 = pyqtSignal(str)
     def __init__(self, login,arg=None,):
         super(User, self).__init__(arg)
         QWidget.__init__(self)
@@ -293,7 +295,56 @@ class User(QMainWindow,USER_UI):
         if reference == '' or quantity == '':
             QMessageBox.warning(self,"Error","Please fill all fields!")
         else:
-            self.next.emit()
+            self.switchWindow2.emit(self.login + ';' + reference + ';' + quantity)
+
+    def recieveData(self,data):
+        #self.btnRv.setText(data)
+        #self.btnRv.setStyleSheet("background-color: lightgreen")
+        #time.sleep(0.5)
+        pass
+
+class Scan(QMainWindow,SCAN_UI):
+    switchWindow = pyqtSignal(str)
+    
+    def __init__(self, text,arg=None,):
+        super(Scan, self).__init__(arg)
+        QWidget.__init__(self)
+        self.setupUi(self)
+        self.login =""
+        self.reference = ""
+        self.quantity = ""
+        self.loaded = False
+        self.handleUI()
+        self.handleButtons()
+        self.handleHeaders()
+
+    def handleUI(self):
+        self.setWindowTitle('MTS Scanner : Scan')
+        self.setFixedSize(900,575)
+        self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+
+    def handleButtons(self):
+        self.btnBack.clicked.connect(self.back)
+        self.btn_I_O.clicked.connect(self.IOmonitor)
+        self.btnStatistic.clicked.connect(self.statistics)
+
+    def handleHeaders(self):
+        date = datetime.datetime.now()
+        self.dateLabel.setText(date.strftime("%Y/%m/%d, %H:%M"))
+        self.usernameLabel.setText("User: "+self.login)
+        self.refLabel.setText("Ref: " + self.reference)
+
+    def back(self):
+        logs(self.login, "Back to user interface")
+        self.switchWindow.emit(self.login)
+
+    def IOmonitor(self):
+        pass
+
+
+    def statistics(self):
+        pass
+
 
     def recieveData(self,data):
         #self.btnRv.setText(data)

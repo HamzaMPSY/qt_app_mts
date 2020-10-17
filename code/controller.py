@@ -8,14 +8,13 @@ class Controller:
         self.login = MainApp()
         self.admin = Admin(login = '')
         self.user = User(login = '')
+        self.scan = Scan(text = '')
         self.serialThread = QThread()
 
 
     def showLogin(self):
         self.login.QTxtLogin.setText('')
         self.login.QTxtPass.setText('')
-        self.user.QTxtQuan.setText('')
-        self.user.QTxtRef.setText('')
         if not self.login.loaded:
             self.login.switchWindow.connect(self.showUser)
             self.login.loaded = True
@@ -24,6 +23,8 @@ class Controller:
         self.login.show()
 
     def showUser(self,text):
+        self.user.QTxtQuan.setText('')
+        self.user.QTxtRef.setText('')
         try:
             self.serialThread.started.disconnect()
             self.serialThread.terminate()
@@ -44,18 +45,31 @@ class Controller:
             self.user.handleHeaders()
             if not self.user.loaded:
                 self.user.switchWindow.connect(self.showLogin)
-                # self.user.sendOutput.connect(self.sendToOutput)
+                self.user.switchWindow2.connect(self.showScan)
                 self.user.loaded = True
             
-            #self.serialPort = SerialPort()
-            #self.serialPort.moveToThread(self.serialThread)
-            #self.serialPort.signal.connect(self.user.recieveData)
-            #self.serialThread.started.connect(self.serialPort.readSerialPort)
-            #self.serialThread.setTerminationEnabled(True)
-            #self.serialThread.start()
             self.login.close()
             self.user.show()
 
     def sendToOutput(self,data):
         print('[+]Sending',data,'to serial port')
         self.serialPort.writeSerialPort(data)
+
+    def showScan(self,text):
+        self.scan.login = text.split(';')[0]
+        self.scan.reference = text.split(';')[1]
+        self.scan.quantity = int(text.split(';')[2])
+        self.scan.handleHeaders()
+        if not self.scan.loaded:
+            self.scan.switchWindow.connect(self.showUser)
+            # self.user.sendOutput.connect(self.sendToOutput)
+            self.scan.loaded = True
+
+        #self.serialPort = SerialPort()
+        #self.serialPort.moveToThread(self.serialThread)
+        #self.serialPort.signal.connect(self.user.recieveData)
+        #self.serialThread.started.connect(self.serialPort.readSerialPort)
+        #self.serialThread.setTerminationEnabled(True)
+        #self.serialThread.start()
+        self.user.close()
+        self.scan.show()
