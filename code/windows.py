@@ -298,9 +298,9 @@ class User(QMainWindow,USER_UI):
             self.switchWindow2.emit(self.login + ';' + reference + ';' + quantity)
 
     def recieveData(self,data):
-        #self.btnRv.setText(data)
-        #self.btnRv.setStyleSheet("background-color: lightgreen")
-        #time.sleep(0.5)
+        # self.btnRv.setText(data)
+        # self.btnRv.setStyleSheet("background-color: lightgreen")
+        # time.sleep(0.5)
         pass
 
 class Scan(QMainWindow,SCAN_UI):
@@ -310,7 +310,7 @@ class Scan(QMainWindow,SCAN_UI):
         super(Scan, self).__init__(arg)
         QWidget.__init__(self)
         self.setupUi(self)
-        self.login =""
+        self.login = ""
         self.reference = ""
         self.quantity = ""
         self.loaded = False
@@ -363,9 +363,12 @@ class Scan(QMainWindow,SCAN_UI):
             self.step4.setStyleSheet('border: 10px solid #64de9d;background-color : #64de9d;')
             self.processed +=1
             self.handel_progressBar()
-            logs(self.login, "Complete "+self.processed + "/" + self.quantity +" of product :" +self.reference)
+            logs(self.login, "Complete "+ str(self.processed) + "/" + str(self.quantity) +" of product :" + self.reference)
             time.sleep(3)
             self.step1.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')
             self.step2.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')
             self.step3.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')
             self.step4.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')
+        if self.processed == self.quantity:
+            logs(self.login, "Finished all products with reference" + self.reference)
+            self.back()
