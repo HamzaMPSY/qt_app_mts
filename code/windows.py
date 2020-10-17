@@ -314,6 +314,7 @@ class Scan(QMainWindow,SCAN_UI):
         self.reference = ""
         self.quantity = ""
         self.loaded = False
+        self.processed = 0
         self.handleUI()
         self.handleButtons()
         self.handleHeaders()
@@ -327,6 +328,12 @@ class Scan(QMainWindow,SCAN_UI):
         self.btnBack.clicked.connect(self.back)
         self.btn_I_O.clicked.connect(self.IOmonitor)
         self.btnStatistic.clicked.connect(self.statistics)
+
+    def handel_progressBar(self,):
+        per = self.processed*100/self.quantity
+        self.progressBar.setValue(per)
+        self.quanLabel.setText('BOX QT' + str(self.processed) +'/' +str(self.quantity))
+        QApplication.processEvents()
 
     def handleHeaders(self):
         date = datetime.datetime.now()
@@ -347,11 +354,18 @@ class Scan(QMainWindow,SCAN_UI):
 
     def recieveData(self,data):
         if data == 'step1':
-            self.step1.setStyleSheet('{border: 15px solid #64de9d;background-color : #64de9d;}')
+            self.step1.setStyleSheet('border: 10px solid #64de9d;background-color : #64de9d;')
         elif data == 'step2':
-            self.step2.setStyleSheet('{border: 15px solid #64de9d;background-color : #64de9d;}')
+            self.step2.setStyleSheet('border: 10px solid #64de9d;background-color : #64de9d;')
         elif data == 'step3':
-            self.step3.setStyleSheet('{border: 15px solid #64de9d;background-color : #64de9d;}')
+            self.step3.setStyleSheet('border: 10px solid #64de9d;background-color : #64de9d;')
         elif data == 'step4':
-            self.step4.setStyleSheet('{border: 15px solid #64de9d;background-color : #64de9d;}')
-            # to do increment qt / add history / progress bar / sleep(3) / setsttyle  
+            self.step4.setStyleSheet('border: 10px solid #64de9d;background-color : #64de9d;')
+            self.processed +=1
+            self.handel_progressBar()
+            logs(self.login, "Complete "+self.processed + "/" + self.quantity +" of product :" +self.reference)
+            time.sleep(3)
+            self.step1.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')
+            self.step2.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')
+            self.step3.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')
+            self.step4.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')

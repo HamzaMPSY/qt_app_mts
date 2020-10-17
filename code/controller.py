@@ -49,6 +49,7 @@ class Controller:
                 self.user.loaded = True
             
             self.login.close()
+            self.scan.close()
             self.user.show()
 
     def sendToOutput(self,data):
@@ -59,7 +60,9 @@ class Controller:
         self.scan.login = text.split(';')[0]
         self.scan.reference = text.split(';')[1]
         self.scan.quantity = int(text.split(';')[2])
+        self.scan.processed = 0
         self.scan.handleHeaders()
+        self.scan.handel_progressBar()
         if not self.scan.loaded:
             self.scan.switchWindow.connect(self.showUser)
             self.scan.loaded = True
