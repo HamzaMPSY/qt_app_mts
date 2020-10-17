@@ -332,7 +332,7 @@ class Scan(QMainWindow,SCAN_UI):
     def handel_progressBar(self,):
         per = self.processed*100/self.quantity
         self.progressBar.setValue(per)
-        self.quanLabel.setText('BOX QT' + str(self.processed) +'/' +str(self.quantity))
+        self.quanLabel.setText('BOX QT ' + str(self.processed) +'/' +str(self.quantity))
         QApplication.processEvents()
 
     def handleHeaders(self):
@@ -363,7 +363,7 @@ class Scan(QMainWindow,SCAN_UI):
             self.step4.setStyleSheet('border: 10px solid #64de9d;background-color : #64de9d;')
             self.processed +=1
             self.handel_progressBar()
-            logs(self.login, "Complete "+self.processed + "/" + self.quantity +" of product :" +self.reference)
+            logs(self.login, "Complete "+ str(self.processed) + "/" + str(self.quantity) +" of product :" + str(self.reference))
             time.sleep(3)
             self.step1.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')
             self.step2.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')
