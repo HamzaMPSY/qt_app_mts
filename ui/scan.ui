@@ -14,15 +14,25 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#MainWindow{
+   <string notr="true">QCheckBox {
+  padding: 2px;
+  font-size: 13px;
+}
+
+QMainWindow {
 background-color : #ffffff;
 }
 
-#step1,#step2, #step3,#step4 {
+#step2, #step3,#step4 {
 border: 15px solid #e1eefa;
 background-color : #e1eefa;
 }
 
+
+#step1{
+border: 15px solid #64de9d;
+background-color : #64de9d;
+}
 
 #label {
 border: 3px solid #d9d9d9;
@@ -47,150 +57,70 @@ background: #e1eefa;
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QSplitter" name="splitter">
+   <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>500</x>
-      <y>482</y>
-      <width>321</width>
-      <height>51</height>
+      <x>20</x>
+      <y>18</y>
+      <width>41</width>
+      <height>61</height>
      </rect>
     </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+    <property name="text">
+     <string/>
     </property>
-    <widget class="QPushButton" name="btn_I_O">
-     <property name="text">
-      <string>I/O Monitor</string>
-     </property>
-     <property name="icon">
-      <iconset>
-       <normaloff>../assets/i_o_icon.png</normaloff>../assets/i_o_icon.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>30</width>
-       <height>30</height>
-      </size>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnStatistic">
-     <property name="text">
-      <string>Statistics</string>
-     </property>
-     <property name="icon">
-      <iconset>
-       <normaloff>../assets/static_icon.png</normaloff>
-       <normalon>../assets/static_icon.png</normalon>../assets/static_icon.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>30</width>
-       <height>30</height>
-      </size>
-     </property>
-    </widget>
+    <property name="pixmap">
+     <pixmap>../assets/logo-small.png</pixmap>
+    </property>
    </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>-6</y>
-      <width>721</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QLabel" name="dateLabel">
-       <property name="styleSheet">
-        <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
-       </property>
-       <property name="text">
-        <string>12/10/2020 , 12:10</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="refLabel">
-       <property name="styleSheet">
-        <string notr="true">font: 75 9pt &quot;Verdana&quot;;
-</string>
-       </property>
-       <property name="text">
-        <string>REF : 283798374376       </string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="usernameLabel">
-       <property name="styleSheet">
-        <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
-       </property>
-       <property name="text">
-        <string>User : Admin</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QPushButton" name="btnBack">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>492</y>
-      <width>91</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>back</string>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>../assets/images.png</normaloff>../assets/images.png</iconset>
-    </property>
-   </widget>
-   <widget class="QWidget" name="layoutWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>82</y>
-      <width>761</width>
-      <height>381</height>
+      <x>70</x>
+      <y>90</y>
+      <width>741</width>
+      <height>388</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
+        <spacer name="verticalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QLabel" name="step1">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>30</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Nirmala UI Semilight</family>
+           <pointsize>14</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true">font: 14pt &quot;Nirmala UI Semilight&quot;;</string>
          </property>
@@ -264,6 +194,27 @@ background: #e1eefa;
        </item>
        <item>
         <widget class="QLabel" name="step3">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>30</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Nirmala UI Semilight</family>
+           <pointsize>14</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true">font: 14pt &quot;Nirmala UI Semilight&quot;;</string>
          </property>
@@ -290,6 +241,27 @@ background: #e1eefa;
        </item>
        <item>
         <widget class="QLabel" name="step4">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>30</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Nirmala UI Semilight</family>
+           <pointsize>14</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true">font: 14pt &quot;Nirmala UI Semilight&quot;;</string>
          </property>
@@ -344,7 +316,20 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
         </layout>
        </item>
        <item>
-        <widget class="QLabel" name="img">
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="label">
          <property name="text">
           <string/>
          </property>
@@ -357,20 +342,134 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
      </item>
     </layout>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QWidget" name="layoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>0</y>
-      <width>41</width>
-      <height>61</height>
+      <x>70</x>
+      <y>12</y>
+      <width>741</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="dateLabel">
+       <property name="styleSheet">
+        <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+       </property>
+       <property name="text">
+        <string>12/10/2020 , 12:10</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="refLabel">
+       <property name="styleSheet">
+        <string notr="true">font: 75 9pt &quot;Verdana&quot;;
+</string>
+       </property>
+       <property name="text">
+        <string>REF : 283798374376       </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="usernameLabel">
+       <property name="styleSheet">
+        <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+       </property>
+       <property name="text">
+        <string>User : Admin</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QSplitter" name="splitter">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>490</y>
+      <width>321</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+    <widget class="QPushButton" name="btn_I_O">
+     <property name="text">
+      <string>I/O Monitor</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../assets/i_o_icon.png</normaloff>../assets/i_o_icon.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>30</width>
+       <height>30</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnStatistic">
+     <property name="text">
+      <string>Statistique</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../assets/static_icon.png</normaloff>
+       <normalon>../assets/static_icon.png</normalon>../assets/static_icon.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>30</width>
+       <height>30</height>
+      </size>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="btnBack">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>490</y>
+      <width>91</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string>&lt; back</string>
     </property>
-    <property name="pixmap">
-     <pixmap>../assets/logo-small.png</pixmap>
+    <property name="icon">
+     <iconset>
+      <normaloff>../assets/images.png</normaloff>../assets/images.png</iconset>
     </property>
    </widget>
   </widget>
@@ -380,7 +479,7 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
      <x>0</x>
      <y>0</y>
      <width>900</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
