@@ -240,8 +240,7 @@ class Admin(QMainWindow,ADMIN_UI):
 
 class User(QMainWindow,USER_UI):
     switchWindow = pyqtSignal()
-    sendOutput = pyqtSignal(str)
-
+    
     def __init__(self, login,arg=None,):
         super(User, self).__init__(arg)
         QWidget.__init__(self)
@@ -259,7 +258,24 @@ class User(QMainWindow,USER_UI):
 
     def handleButtons(self):
         self.btnLogout.clicked.connect(self.logout)
-        self.btnSend.clicked.connect(self.send)
+        self.btnNext.clicked.connect(self.next)
+        #self.QTxtRef.setEnabled(False)
+        self.QTxtQuan.setValidator(QIntValidator())
+        self.QTxtRef.textChanged.connect(self.updateStyleSheetRef)
+        self.QTxtQuan.textChanged.connect(self.updateStyleSheetQuan)
+
+    def updateStyleSheetRef(self):
+        if len(self.QTxtRef.text())>0:
+            self.QTxtRef.setStyleSheet("color: green;")
+        else:
+            self.QTxtRef.setStyleSheet("color: red;")
+
+    def updateStyleSheetQuan(self):
+        if len(self.QTxtQuan.text())>0:
+            self.QTxtQuan.setStyleSheet("color: green;")
+        else:
+            self.QTxtQuan.setStyleSheet("color: red;")
+
 
     def handleHeaders(self):
         date = datetime.datetime.now()
@@ -270,14 +286,17 @@ class User(QMainWindow,USER_UI):
         logs(self.login, "logout")
         self.switchWindow.emit()
 
-    def send(self):
-        tosend = self.lineEdit.text()
-        if tosend == '':
-            QMessageBox.warning(self,"Error","Please fill referece product field!")
+    def next(self):
+        reference = self.QTxtRef.text()
+        quantity = self.QTxtQuan.text()
+
+        if reference == '' or quantity == '':
+            QMessageBox.warning(self,"Error","Please fill all fields!")
         else:
-            self.sendOutput.emit(tosend)
+            self.next.emit()
 
     def recieveData(self,data):
-        self.btnRv.setText(data)
-        self.btnRv.setStyleSheet("background-color: lightgreen")
-        time.sleep(0.5)
+        #self.btnRv.setText(data)
+        #self.btnRv.setStyleSheet("background-color: lightgreen")
+        #time.sleep(0.5)
+        pass

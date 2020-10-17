@@ -14,6 +14,8 @@ class Controller:
     def showLogin(self):
         self.login.QTxtLogin.setText('')
         self.login.QTxtPass.setText('')
+        self.user.QTxtQuan.setText('')
+        self.user.QTxtRef.setText('')
         if not self.login.loaded:
             self.login.switchWindow.connect(self.showUser)
             self.login.loaded = True
@@ -42,15 +44,15 @@ class Controller:
             self.user.handleHeaders()
             if not self.user.loaded:
                 self.user.switchWindow.connect(self.showLogin)
-                self.user.sendOutput.connect(self.sendToOutput)
+                # self.user.sendOutput.connect(self.sendToOutput)
                 self.user.loaded = True
             
-            self.serialPort = SerialPort()
-            self.serialPort.moveToThread(self.serialThread)
-            self.serialPort.signal.connect(self.user.recieveData)
-            self.serialThread.started.connect(self.serialPort.readSerialPort)
-            self.serialThread.setTerminationEnabled(True)
-            self.serialThread.start()
+            #self.serialPort = SerialPort()
+            #self.serialPort.moveToThread(self.serialThread)
+            #self.serialPort.signal.connect(self.user.recieveData)
+            #self.serialThread.started.connect(self.serialPort.readSerialPort)
+            #self.serialThread.setTerminationEnabled(True)
+            #self.serialThread.start()
             self.login.close()
             self.user.show()
 
