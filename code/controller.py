@@ -20,6 +20,7 @@ class Controller:
             self.login.loaded = True
         self.admin.close()
         self.user.close()
+        self.scan.close()
         self.login.show()
 
     def showUser(self,text):
@@ -32,13 +33,14 @@ class Controller:
             print(e)
         users = pd.read_csv('../files/users.csv')
         res = users[(users['username'] == text)]
-        if res['isadmin'].item() == 1:
+        if res['username'].item() == "admin":
             self.admin.login = text
             self.admin.handleHeaders()
             if not self.admin.loaded:
                 self.admin.switchWindow.connect(self.showLogin)
                 self.admin.loaded = True
             self.login.close()
+            time.sleep(0.5)
             self.admin.show()
         else :
             self.user.login = text
@@ -50,6 +52,7 @@ class Controller:
             
             self.login.close()
             self.scan.close()
+            time.sleep(0.5)
             self.user.show()
 
     def sendToOutput(self,data):
@@ -74,4 +77,5 @@ class Controller:
         self.serialThread.setTerminationEnabled(True)
         self.serialThread.start()
         self.user.close()
+        time.sleep(0.5)
         self.scan.show()
