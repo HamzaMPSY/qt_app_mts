@@ -1,4 +1,4 @@
-username,password,isadmin
-admin,admin,1
-user,user,0
-test,test,0
+username,password
+admin,admin
+user,user
+test,test

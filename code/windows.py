@@ -18,21 +18,19 @@ USER_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/user.ui"))
 SCAN_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/scan.ui"))
 
 
-def logs(username, action):
-    path = '../files/logins.csv'
+def logs(username, reference,quantity):
+    path = '../files/history.csv'
     if not os.path.isfile(path):
         logs = open(path, 'w')
-        logs.write("username,date,action\n")
+        logs.write("username,date,reference,quantity\n")
         logs.close()
     logs = open(path, 'a')
     date = datetime.datetime.now()
-    line = username + "," + date.strftime("%Y/%m/%d %H:%M") + "," + action + "\n" 
+    line = username + "," + date.strftime("%Y/%m/%d %H:%M") + "," + reference + "," + quantity +  "\n" 
     logs.write(line)
     logs.close()
 
 class MainApp(QMainWindow,LOGIN_UI):
-    """docstring for MainApp"""
-
     switchWindow = pyqtSignal(str)
 
     def __init__(self, arg=None):
@@ -45,7 +43,7 @@ class MainApp(QMainWindow,LOGIN_UI):
         
     def handleUI(self):
         self.setWindowTitle('MTS Scanner')
-        self.setFixedSize(900,575)
+        self.showMaximized()
         self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
     
     def handleLogin(self):
@@ -60,7 +58,7 @@ class MainApp(QMainWindow,LOGIN_UI):
             users = pd.read_csv('../files/users.csv')
             res = users[(users['username'] == login) & (users['password'] == password)]
             if res.shape[0] >= 1 :
-                logs(login, "login") 
+                # logs(login, "login") 
                 self.switchWindow.emit(login)
             else:
                 QMessageBox.warning(self,"Error","Login or Password incorrect!")
@@ -84,7 +82,7 @@ class Admin(QMainWindow,ADMIN_UI):
 
     def handleUI(self):
         self.setWindowTitle('MTS Scanner : Admin Control Panel')
-        self.setFixedSize(900,575)
+        self.showMaximized()
         self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
 
     def handleButtons(self):
@@ -101,7 +99,7 @@ class Admin(QMainWindow,ADMIN_UI):
         self.usernameLabel.setText(self.login)
 
     def logout(self):
-        logs(self.login, "logout")
+        # logs(self.login, "logout")
         self.switchWindow.emit()
 
     def users(self):
@@ -129,7 +127,7 @@ class Admin(QMainWindow,ADMIN_UI):
 
     def history(self):
         self.btnadduser.hide()
-        logs = pd.read_csv('../files/logins.csv')
+        logs = pd.read_csv('../files/history.csv')
         model = pandasModel(logs)
         self.tableView.setModel(model)
         self.tableView.horizontalHeader().setStretchLastSection(True) 
@@ -162,13 +160,13 @@ class Admin(QMainWindow,ADMIN_UI):
 
     def pins(self):
         self.btnadduser.show()
-        self.btnadduser.setText('add pin')
+        self.btnadduser.setText('add port')
         try:
             self.btnadduser.clicked.disconnect()
         except Exception :
             pass
         self.btnadduser.clicked.connect(self.addpin)
-        pins = pd.read_csv('../files/pins.csv')
+        pins = pd.read_csv('../files/settings.csv')
         model = pandasModel(pins)
         self.tableView.setModel(model)
         self.tableView.horizontalHeader().setStretchLastSection(True) 
@@ -185,8 +183,8 @@ class Admin(QMainWindow,ADMIN_UI):
 
     def modifypin(self,item):
         row = item.row()
-        editPin = PinDialog(row,self.login)
-        editPin.setWindowTitle('Edit Pin')
+        editPin = PinDialog(row,self.login,is_admin = True)
+        editPin.setWindowTitle('Edit Port')
         editPin.setWindowIcon(QIcon('../assets/logo-scroll.png'))
         editPin.exec_()
         editPin.close()
@@ -194,7 +192,7 @@ class Admin(QMainWindow,ADMIN_UI):
 
     def addpin(self):
         addPin = AddPinDialog(self.login)
-        addPin.setWindowTitle('Add Pin')
+        addPin.setWindowTitle('Add Port')
         addPin.setWindowIcon(QIcon('../assets/logo-scroll.png'))
         addPin.exec_()
         addPin.close()
@@ -255,12 +253,14 @@ class User(QMainWindow,USER_UI):
 
     def handleUI(self):
         self.setWindowTitle('MTS Scanner : User')
-        self.setFixedSize(900,575)
+        self.showMaximized()
         self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
 
     def handleButtons(self):
         self.btnLogout.clicked.connect(self.logout)
         self.btnNext.clicked.connect(self.next)
+        self.btnscanner.clicked.connect(self.editScanner)
+        self.btnplc.clicked.connect(self.editPlc)
         #self.QTxtRef.setEnabled(False)
         self.QTxtQuan.setValidator(QIntValidator())
         self.QTxtRef.textChanged.connect(self.updateStyleSheetRef)
@@ -285,7 +285,7 @@ class User(QMainWindow,USER_UI):
         self.usernameLabel.setText(self.login)
 
     def logout(self):
-        logs(self.login, "logout")
+        # logs(self.login, "logout")
         self.switchWindow.emit()
 
     def next(self):
@@ -296,12 +296,29 @@ class User(QMainWindow,USER_UI):
             QMessageBox.warning(self,"Error","Please fill all fields!")
         else:
             self.switchWindow2.emit(self.login + ';' + reference + ';' + quantity)
+            logs(self.login,reference,quantity)
 
     def recieveData(self,data):
-        # self.btnRv.setText(data)
-        # self.btnRv.setStyleSheet("background-color: lightgreen")
-        # time.sleep(0.5)
+        # TO-DO : read from barcode scanner
         pass
+
+    def editScanner(self):
+        res = pd.read_csv('../files/settings.csv')
+        row = list(res[res['purpose'] == 'Scanner'].index)[0]
+        editPin = PinDialog(row,self.login,is_admin = False)
+        editPin.setWindowTitle('Edit Port')
+        editPin.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        editPin.exec_()
+        editPin.close()
+
+    def editPlc(self):
+        res = pd.read_csv('../files/settings.csv')
+        row = list(res[res['purpose'] == 'PLC'].index)[0]
+        editPin = PinDialog(row,self.login,is_admin = False)
+        editPin.setWindowTitle('Edit Port')
+        editPin.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        editPin.exec_()
+        editPin.close()
 
 class Scan(QMainWindow,SCAN_UI):
     switchWindow = pyqtSignal(str)
@@ -321,13 +338,14 @@ class Scan(QMainWindow,SCAN_UI):
 
     def handleUI(self):
         self.setWindowTitle('MTS Scanner : Scan')
-        self.setFixedSize(900,575)
+        self.showMaximized()
         self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
 
     def handleButtons(self):
         self.btnBack.clicked.connect(self.back)
         self.btn_I_O.clicked.connect(self.IOmonitor)
         self.btnStatistic.clicked.connect(self.statistics)
+        self.draw('../assets/step1.jpg')
 
     def handel_progressBar(self,):
         per = self.processed*100/self.quantity
@@ -342,7 +360,6 @@ class Scan(QMainWindow,SCAN_UI):
         self.refLabel.setText("Ref: " + self.reference)
 
     def back(self):
-        logs(self.login, "Back to user interface")
         self.switchWindow.emit(self.login)
 
     def IOmonitor(self):
@@ -355,20 +372,29 @@ class Scan(QMainWindow,SCAN_UI):
     def recieveData(self,data):
         if data == 'step1':
             self.step1.setStyleSheet('border: 10px solid #64de9d;background-color : #64de9d;')
+            self.draw('../assets/step2.jpg')
         elif data == 'step2':
             self.step2.setStyleSheet('border: 10px solid #64de9d;background-color : #64de9d;')
+            self.draw('../assets/step3.jpg')
         elif data == 'step3':
             self.step3.setStyleSheet('border: 10px solid #64de9d;background-color : #64de9d;')
+            self.draw('../assets/step4.jpg')
         elif data == 'step4':
             self.step4.setStyleSheet('border: 10px solid #64de9d;background-color : #64de9d;')
             self.processed +=1
             self.handel_progressBar()
-            logs(self.login, "Complete "+ str(self.processed) + "/" + str(self.quantity) +" of product :" + str(self.reference))
+            #logs(self.login, "Complete "+ str(self.processed) + "/" + str(self.quantity) +" of product :" + str(self.reference))
             time.sleep(3)
             self.step1.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')
             self.step2.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')
             self.step3.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')
             self.step4.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')
+            self.draw('../assets/step1.jpg')
         if self.processed == self.quantity:
-            logs(self.login, "Finished all products with reference" + self.reference)
+            # logs(self.login, "Finished all products with reference" + self.reference)
             self.back()
+
+
+    def draw(self,name):
+        pix =  QPixmap(name)
+        self.label.setPixmap(pix.scaled(self.label.size()))
