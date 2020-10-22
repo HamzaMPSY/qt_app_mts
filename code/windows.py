@@ -385,14 +385,14 @@ class Scan(QMainWindow,SCAN_UI):
             self.handel_progressBar()
             #logs(self.login, "Complete "+ str(self.processed) + "/" + str(self.quantity) +" of product :" + str(self.reference))
             time.sleep(3)
-            self.step1.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')
-            self.step2.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')
-            self.step3.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')
-            self.step4.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')
+            self.step1.setStyleSheet('border: 15px solid #35394a;background-color : #35394a;')
+            self.step2.setStyleSheet('border: 15px solid #35394a;background-color : #35394a;')
+            self.step3.setStyleSheet('border: 15px solid #35394a;background-color : #35394a;')
+            self.step4.setStyleSheet('border: 15px solid #35394a;background-color : #35394a;')
             self.draw('../assets/step1.jpg')
         if self.processed == self.quantity:
             # logs(self.login, "Finished all products with reference" + self.reference)
-            self.back()
+            # self.back()
 
 
     def draw(self,name):
