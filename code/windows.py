@@ -263,6 +263,8 @@ class User(QMainWindow,USER_UI):
         self.movie = QMovie('../assets/tenor.gif')
         self.label.setMovie(self.movie)
         self.movie.start()
+        self.state.setText(" ")
+        QCoreApplication.processEvents()
         pix1 =  QPixmap('../assets/logo-small.png')
         self.logo1.setPixmap(pix1.scaled(self.logo1.size()))
         pix2 =  QPixmap('../assets/logo-csmall.png')
@@ -292,20 +294,27 @@ class User(QMainWindow,USER_UI):
     def recieveData(self,data):
         if data.startswith('ref'):
             self.movie.stop()
-            self.label.setPixmap('../assets/'+data+'.jpg')
+            # self.label.setPixmap()
+            pix =  QPixmap('../assets/'+data+'.jpg')
+            self.label.setPixmap(pix.scaled(self.label.size()))
             self.QTxtRef.setText(data)
             self.sendData(data)
         else:
-            self.state.setPixmap('../assets/'+data+'.png')
+            data = data.lower()
+            pix =  QPixmap('../assets/'+data+'.png')
+            self.state.setPixmap(pix)#.scaled(self.state.size()))
+            QCoreApplication.processEvents()
             time.sleep(3)
             self.label.setMovie(self.movie)
             self.movie.start()
-            self.state.clear()
+            self.state.setText(" ")
+            self.QTxtRef.setText("")
+            QCoreApplication.processEvents()
 
     def sendData(self,data):
         res = pd.read_csv('../files/references.csv')
-        code = res[res['refrerence'] == data]['code'].item()
-        self.sendsignal.emit(code)
+        code = res[res['reference'] == data]['code'].item()
+        self.sendsignal.emit(str(code))
 
     def editSettings(self):
         # edit scanner
