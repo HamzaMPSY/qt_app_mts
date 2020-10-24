@@ -9,7 +9,7 @@ class Controller:
         self.serialThread = QThread()
         self.open_admin = False
         self.open_user = False
-        #self.open_scan = False
+        self.open_stats = False
 
     def showLogin(self):
         self.login.QTxtLogin.setText('')
@@ -39,7 +39,10 @@ class Controller:
             self.admin.handleHeaders()
             if not self.admin.loaded:
                 self.admin.switchWindow.connect(self.showLogin)
+                self.admin.switchWindow2.connect(self.showStats)
                 self.admin.loaded = True
+            if self.open_stats:
+                self.stats.close()
             self.login.close()
             self.admin.show()
         else :
@@ -61,6 +64,8 @@ class Controller:
             self.serialThread.setTerminationEnabled(True)
             self.serialThread.start()
             self.login.close()
+            if self.open_stats:
+                self.stats.close()
             self.user.show()
 
     def sendToOutput(self,data):
@@ -90,3 +95,18 @@ class Controller:
         self.user.close()
         time.sleep(0.5)
         self.scan.show()
+
+    def showStats(self,text):
+        if not self.open_stats:
+            self.stats = Statistics('')
+            self.open_stats = True
+        self.stats.login = text
+        self.stats.handleHeaders()
+        if not self.stats.loaded:
+            self.stats.switchWindow.connect(self.showUser)
+            self.stats.loaded = True
+        self.stats.show()
+        if self.open_admin:
+            self.admin.close()
+        if self.open_user:
+            self.user.close()

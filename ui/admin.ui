@@ -14,8 +14,7 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-</string>
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -140,6 +139,13 @@ width: 80pt</string>
          <widget class="QPushButton" name="btnpins">
           <property name="text">
            <string>Settings</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="stats">
+          <property name="text">
+           <string>statistics</string>
           </property>
          </widget>
         </item>

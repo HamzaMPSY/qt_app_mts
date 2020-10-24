@@ -1,10 +1,23 @@
-username,date,refrence
-user,2020/10/20 17:24,a
-user,2020/10/20 17:24,b
-user,2020/10/20 17:24,1546
-user,2020/10/21 12:23,12
-user,2020/10/21 13:02,aze
-user,2020/10/21 13:06,12
-user,2020/10/21 13:23,a
-user,2020/10/23 15:53,a
-user,2020/10/24 11:56,za
+username,date,reference,response
+user1,2020/10/20 17:24,ref1,OK
+user1,2020/10/20 17:24,ref3,NOK
+user1,2020/10/20 17:24,ref2,OK
+user1,2020/10/21 12:23,ref2,OK
+user2,2020/10/21 13:02,ref1,NOK
+user2,2020/10/21 13:06,ref2,NOK
+user2,2020/10/21 13:23,ref1,NOK
+user2,2020/10/23 15:53,ref1,NOK
+user3,2020/10/24 11:56,ref2,OK
+user3,2020/10/20 17:24,ref1,OK
+user3,2020/10/20 17:24,ref3,OK
+user3,2020/10/20 17:24,ref2,OK
+user3,2020/10/21 12:23,ref2,NOK
+user4,2020/10/21 13:02,ref1,NOK
+user4,2020/10/21 13:06,ref2,OK
+user4,2020/10/21 13:23,ref1,NOK
+user4,2020/10/23 15:53,ref1,NOK
+user5,2020/10/24 11:56,ref2,OK
+user5,2020/10/20 17:24,ref1,NOK
+user5,2020/10/20 17:24,ref3,OK
+user5,2020/10/20 17:24,ref2,OK
+user5,2020/10/21 12:23,ref2,NOK

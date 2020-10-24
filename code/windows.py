@@ -15,18 +15,18 @@ import time
 LOGIN_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/login.ui"))
 ADMIN_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/admin.ui"))
 USER_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/user.ui"))
-SCAN_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/scan.ui"))
+STATS_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/statistics.ui"))
 
 
-def logs(username, reference,quantity):
+def logs(username, reference,response):
     path = '../files/history.csv'
     if not os.path.isfile(path):
         logs = open(path, 'w')
-        logs.write("username,date,reference,quantity\n")
+        logs.write("username,date,reference,response\n")
         logs.close()
     logs = open(path, 'a')
     date = datetime.datetime.now()
-    line = username + "," + date.strftime("%Y/%m/%d %H:%M") + "," + reference + "," + quantity +  "\n" 
+    line = username + "," + date.strftime("%Y/%m/%d %H:%M") + "," + reference + "," + response +  "\n" 
     logs.write(line)
     logs.close()
 
@@ -70,6 +70,7 @@ class MainApp(QMainWindow,LOGIN_UI):
 
 class Admin(QMainWindow,ADMIN_UI):
     switchWindow = pyqtSignal()
+    switchWindow2 = pyqtSignal(str)
 
     def __init__(self, login,arg=None,):
         super(Admin, self).__init__(arg)
@@ -96,6 +97,7 @@ class Admin(QMainWindow,ADMIN_UI):
         self.btnadduser.hide()
         self.btnpins.clicked.connect(self.pins)
         self.btnreferences.clicked.connect(self.references)
+        self.stats.clicked.connect(self.statistics)
 
     def handleHeaders(self):
         date = datetime.datetime.now()
@@ -242,11 +244,16 @@ class Admin(QMainWindow,ADMIN_UI):
         addRef.close()
         self.references()
 
+
+    def statistics(self):
+        self.switchWindow2.emit(self.login)
+
 class User(QMainWindow,USER_UI):
     switchWindow = pyqtSignal()
     switchWindow2 = pyqtSignal(str)
     sendsignal = pyqtSignal(str)
     def __init__(self, login,arg=None,):
+        self.last_ref = ''
         super(User, self).__init__(arg)
         QWidget.__init__(self)
         self.setupUi(self)
@@ -293,6 +300,7 @@ class User(QMainWindow,USER_UI):
 
     def recieveData(self,data):
         if data.startswith('ref'):
+            self.last_ref = data
             self.movie.stop()
             # self.label.setPixmap()
             pix =  QPixmap('../assets/'+data+'.jpg')
@@ -300,6 +308,7 @@ class User(QMainWindow,USER_UI):
             self.QTxtRef.setText(data)
             self.sendData(data)
         else:
+            logs(self.login,self.last_ref,data)
             data = data.lower()
             pix =  QPixmap('../assets/'+data+'.png')
             self.state.setPixmap(pix)#.scaled(self.state.size()))
@@ -332,6 +341,39 @@ class User(QMainWindow,USER_UI):
         editPin.setWindowIcon(QIcon('../assets/logo-scroll.png'))
         editPin.exec_()
         editPin.close()
+        
+class Statistics(QMainWindow,STATS_UI):
+    switchWindow = pyqtSignal(str)
+
+    def __init__(self, login,arg=None):
+        super(Statistics, self).__init__(arg)
+        QMainWindow.__init__(self)
+        self.loaded = False
+        self.login = login
+        self.setupUi(self)
+        self.handleUI()
+        self.handleButtons()
+        self.handleHeaders()
+        
+    def handleUI(self):
+        self.setWindowTitle('MTS Scanner: Statistics')
+        self.showMaximized()
+        self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        pix1 =  QPixmap('../assets/logo-s.png')
+        self.logo1.setPixmap(pix1.scaled(self.logo1.size()))
+        pix2 =  QPixmap('../assets/logo-c.jpg')
+        self.logo2.setPixmap(pix2.scaled(self.logo1.size()))
+    
+    def handleButtons(self):
+        self.btnback.clicked.connect(self.back)
+
+    def handleHeaders(self):
+        date = datetime.datetime.now()
+        self.dateLabel.setText(date.strftime("%Y/%m/%d, %H:%M"))
+        self.usernameLabel.setText(self.login)
+
+    def back(self):
+        self.switchWindow.emit(self.login)
         
 
 # class Scan(QMainWindow,SCAN_UI):
