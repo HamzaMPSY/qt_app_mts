@@ -35,7 +35,6 @@ class SerialPort(QObject):
                         self.signal.emit(data)
                 except Exception as e:
                     self.portConnect()
-
                 time.sleep(1)
         print ("Finish reading from port")
     

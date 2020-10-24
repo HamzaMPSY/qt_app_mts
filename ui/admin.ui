@@ -6,49 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>745</height>
+    <width>716</width>
+    <height>531</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QPushButton {
-  font-family: sans-serif;
-  text-transform: uppercase;
-  outline: 0;
-  background: #35394a;
-  border: 10px;
-  padding: 10px;
-  color: #FFFFFF;
-  font-size: 13px;
- border-radius: 3px;
-
-}
-
-QLabel{
-  font-family: sans-serif;
-  text-transform: uppercase;
-  outline: 0;
-  background: #ffffff;
-  border: 1px;
-  padding: 5px;
-  color: #35394a;
-  font-size: 15px;
- 
-}
-QMainWindow{
-  background: #ffffff;
-
-}
-QHeaderView {
- font-size: 14pt;
- font: 10pt &quot;OCR A Extended&quot;;
- }
-QTableView{
- font: 10pt &quot;Yu Gothic UI&quot;;
-}</string>
+   <string notr="true">
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -57,37 +24,7 @@ QTableView{
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <spacer name="horizontalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QLabel" name="dateLabel">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>date</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_2"/>
         </item>
         <item>
          <spacer name="horizontalSpacer_2">
@@ -113,6 +50,10 @@ QTableView{
             <height>30</height>
            </size>
           </property>
+          <property name="styleSheet">
+           <string notr="true">font: 75 22pt &quot;Arial Narrow&quot;;
+width: 80pt</string>
+          </property>
           <property name="text">
            <string>UserName</string>
           </property>
@@ -121,22 +62,6 @@ QTableView{
        </layout>
       </item>
      </layout>
-    </item>
-    <item>
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Fixed</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>10</height>
-       </size>
-      </property>
-     </spacer>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -228,6 +153,19 @@ QTableView{
        </layout>
       </item>
       <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
        <widget class="QSplitter" name="splitter">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -238,20 +176,32 @@ QTableView{
      </layout>
     </item>
     <item>
-     <spacer name="verticalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Minimum</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>60</height>
-       </size>
-      </property>
-     </spacer>
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="dateLabel">
+        <property name="styleSheet">
+         <string notr="true">font: 75 22pt &quot;Arial Narrow&quot;;
+width: 80pt</string>
+        </property>
+        <property name="text">
+         <string>2020;15;8 15:20</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
@@ -260,7 +210,7 @@ QTableView{
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1000</width>
+     <width>716</width>
      <height>21</height>
     </rect>
    </property>
