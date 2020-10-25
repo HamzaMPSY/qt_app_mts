@@ -13,6 +13,17 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QRadioButton{
+font: 25 12pt &quot;Yu Gothic UI Light&quot;;
+}
+
+QLabel{
+font: 25 12pt &quot;Yu Gothic UI Semibold&quot;;
+
+}
+</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
@@ -151,7 +162,7 @@ width: 80pt</string>
          <widget class="QComboBox" name="users">
           <property name="minimumSize">
            <size>
-            <width>150</width>
+            <width>160</width>
             <height>0</height>
            </size>
           </property>
@@ -233,7 +244,7 @@ width: 80pt</string>
          <widget class="QComboBox" name="products">
           <property name="minimumSize">
            <size>
-            <width>150</width>
+            <width>160</width>
             <height>0</height>
            </size>
           </property>
@@ -335,6 +346,10 @@ width: 80pt</string>
         </item>
         <item>
          <widget class="QRadioButton" name="radioButton_5">
+          <property name="styleSheet">
+           <string notr="true">
+</string>
+          </property>
           <property name="text">
            <string>by day</string>
           </property>
