@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>729</width>
-    <height>794</height>
+    <width>815</width>
+    <height>926</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -84,6 +84,22 @@ font-family: sans-serif;
      </layout>
     </item>
     <item>
+     <spacer name="verticalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Fixed</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>60</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
        <spacer name="horizontalSpacer_3">
@@ -104,7 +120,9 @@ font-family: sans-serif;
       <item>
        <widget class="QLabel" name="label">
         <property name="styleSheet">
-         <string notr="true"/>
+         <string notr="true">border: 2px solid red;
+border-color:  #40a0ff;
+ border-radius: 5px;</string>
         </property>
         <property name="text">
          <string/>
@@ -158,6 +176,12 @@ font-family: sans-serif;
           <height>40</height>
          </size>
         </property>
+        <property name="maximumSize">
+         <size>
+          <width>500</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <family>sans-serif</family>
@@ -187,6 +211,9 @@ font-family: sans-serif;
      <spacer name="verticalSpacer_2">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Expanding</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
@@ -249,6 +276,9 @@ font-family: sans-serif;
      <spacer name="verticalSpacer">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Expanding</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
@@ -331,6 +361,10 @@ font-family: sans-serif;
       </item>
       <item>
        <widget class="QLabel" name="dateLabel">
+        <property name="styleSheet">
+         <string notr="true">font: 25 14pt &quot;Yu Gothic UI Light&quot;;
+</string>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>

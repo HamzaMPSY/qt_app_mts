@@ -7,6 +7,7 @@ import pandas as pd
 import datetime
 from pandasModel import *
 from dialogs import *
+from statistics import *
 import os
 import time
 
@@ -354,6 +355,7 @@ class Statistics(QMainWindow,STATS_UI):
         self.handleUI()
         self.handleButtons()
         self.handleHeaders()
+        # self.drawPlots()
         
     def handleUI(self):
         self.setWindowTitle('MTS Scanner: Statistics')
@@ -363,9 +365,19 @@ class Statistics(QMainWindow,STATS_UI):
         self.logo1.setPixmap(pix1.scaled(self.logo1.size()))
         pix2 =  QPixmap('../assets/logo-c.jpg')
         self.logo2.setPixmap(pix2.scaled(self.logo1.size()))
-    
+        hist = pd.read_csv('../files/history.csv')
+        userList = hist['username'].unique()
+        refList = hist['reference'].unique()
+        self.users.addItems(userList)
+        self.products.addItems(refList)
+        self.userPlot()
+        self.productPlot()
+
     def handleButtons(self):
         self.btnback.clicked.connect(self.back)
+        self.users.activated.connect(self.userPlot)
+        self.products.activated.connect(self.productPlot)
+
 
     def handleHeaders(self):
         date = datetime.datetime.now()
@@ -374,7 +386,28 @@ class Statistics(QMainWindow,STATS_UI):
 
     def back(self):
         self.switchWindow.emit(self.login)
-        
+    
+    def userPlot(self):
+        user = str(self.users.currentText())
+        plotNumberOfScans('username',user)
+        self.drawPlots()
+
+    def productPlot(self):
+        ref = str(self.products.currentText())
+        plotNumberOfScans('reference',ref)
+        self.drawPlots()
+
+    def drawPlots(self):
+        try:
+            pix1 =  QPixmap('../assets/username.png')
+            pix2 =  QPixmap('../assets/reference.png')
+            self.g1.setPixmap(pix1)
+            self.g2.setPixmap(pix2)
+            print(1)
+        except Exception as e:
+            print('err')
+        QCoreApplication.processEvents()
+
 
 # class Scan(QMainWindow,SCAN_UI):
 #     switchWindow = pyqtSignal(str)
