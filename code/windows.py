@@ -401,9 +401,8 @@ class Statistics(QMainWindow,STATS_UI):
         try:
             pix1 =  QPixmap('../assets/username.png')
             pix2 =  QPixmap('../assets/reference.png')
-            self.g1.setPixmap(pix1)
-            self.g2.setPixmap(pix2)
-            print(1)
+            self.g1.setPixmap(pix1.scaled(self.g1.size()))
+            self.g2.setPixmap(pix2.scaled(self.g2.size()))
         except Exception as e:
             print('err')
         QCoreApplication.processEvents()
