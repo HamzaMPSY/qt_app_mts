@@ -83,8 +83,7 @@ font: 25 12pt &quot;Yu Gothic UI Semibold&quot;;
        <widget class="QLabel" name="usernameLabel">
         <property name="styleSheet">
          <string notr="true">
-font: 25 15pt &quot;Yu Gothic UI Light&quot;;
-width: 80pt</string>
+</string>
         </property>
         <property name="text">
          <string>UserName</string>
@@ -347,8 +346,7 @@ width: 80pt</string>
         <item>
          <widget class="QRadioButton" name="radioButton_5">
           <property name="styleSheet">
-           <string notr="true">
-</string>
+           <string notr="true"/>
           </property>
           <property name="text">
            <string>by day</string>
@@ -535,9 +533,7 @@ width: 80pt</string>
       <item>
        <widget class="QLabel" name="dateLabel">
         <property name="styleSheet">
-         <string notr="true">
-font: 25 15pt &quot;Yu Gothic UI Light&quot;;
-width: 80pt</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Date</string>

@@ -14,7 +14,14 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QRadioButton{
+font: 25 12pt &quot;Yu Gothic UI Light&quot;;
+}
+
+QLabel{
+font: 25 12pt &quot;Yu Gothic UI Semibold&quot;;
+}
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -76,8 +83,7 @@
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">font: 25 15pt &quot;Yu Gothic UI Light&quot;;
-width: 80pt</string>
+           <string notr="true"/>
           </property>
           <property name="text">
            <string>UserName</string>
@@ -376,51 +382,12 @@ width: 80pt</string>
        </spacer>
       </item>
       <item>
-       <spacer name="verticalSpacer_11">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <spacer name="verticalSpacer_10">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
        <widget class="QSplitter" name="splitter">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
         <widget class="QTableView" name="tableView"/>
        </widget>
-      </item>
-      <item>
-       <spacer name="verticalSpacer_12">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
       </item>
      </layout>
     </item>
@@ -458,8 +425,7 @@ width: 80pt</string>
       <item>
        <widget class="QLabel" name="dateLabel">
         <property name="styleSheet">
-         <string notr="true">font: 25 15pt &quot;Yu Gothic UI Light&quot;;
-width: 80pt</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>2020;15;8 15:20</string>
@@ -492,7 +458,7 @@ width: 80pt</string>
      <x>0</x>
      <y>0</y>
      <width>959</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

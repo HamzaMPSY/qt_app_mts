@@ -14,15 +14,14 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QLabel {
-font-family: sans-serif;
-  text-transform: uppercase;
-  outline: 0;
-  border: 1px;
-  padding: 2px;
-  color: #35394a;
-  font-size: 15px;
-}</string>
+   <string notr="true">QRadioButton{
+font: 25 12pt &quot;Yu Gothic UI Light&quot;;
+}
+
+QLabel{
+font: 25 12pt &quot;Yu Gothic UI Semibold&quot;;
+}
+</string>
   </property>
   <property name="inputMethodHints">
    <set>Qt::ImhFormattedNumbersOnly</set>
@@ -73,7 +72,7 @@ font-family: sans-serif;
       <item>
        <widget class="QLabel" name="usernameLabel">
         <property name="styleSheet">
-         <string notr="true">font: 63 10pt &quot;Segoe UI Semibold&quot;;
+         <string notr="true">
 </string>
         </property>
         <property name="text">
@@ -208,22 +207,6 @@ border-color:  #40a0ff;
      </layout>
     </item>
     <item>
-     <spacer name="verticalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Expanding</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item>
      <layout class="QHBoxLayout" name="horizontalLayout_6">
       <item>
        <spacer name="horizontalSpacer_9">
@@ -273,22 +256,6 @@ border-color:  #40a0ff;
      </layout>
     </item>
     <item>
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Expanding</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <widget class="QPushButton" name="btnLogout">
@@ -305,19 +272,6 @@ border-color:  #40a0ff;
       </item>
       <item>
        <spacer name="horizontalSpacer_6">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_2">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -362,7 +316,7 @@ border-color:  #40a0ff;
       <item>
        <widget class="QLabel" name="dateLabel">
         <property name="styleSheet">
-         <string notr="true">font: 25 14pt &quot;Yu Gothic UI Light&quot;;
+         <string notr="true">
 </string>
         </property>
         <property name="text">
