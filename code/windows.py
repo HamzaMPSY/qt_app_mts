@@ -90,6 +90,11 @@ class Admin(QMainWindow,ADMIN_UI):
         self.setWindowTitle('MTS Scanner : Admin Control Panel')
         self.showMaximized()
         self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        pix1 =  QPixmap('../assets/logo-small.png')
+        self.logo1.setPixmap(pix1.scaled(self.logo1.size()))
+        pix2 =  QPixmap('../assets/logo-csmall.png')
+        self.logo2.setPixmap(pix2.scaled(self.logo1.size()))
+        QCoreApplication.processEvents()
 
     def handleButtons(self):
         self.btnlogout.clicked.connect(self.logout)
@@ -272,17 +277,18 @@ class User(QMainWindow,USER_UI):
         self.label.setMovie(self.movie)
         self.movie.start()
         self.state.setText(" ")
-        QCoreApplication.processEvents()
         pix1 =  QPixmap('../assets/logo-small.png')
         self.logo1.setPixmap(pix1.scaled(self.logo1.size()))
         pix2 =  QPixmap('../assets/logo-csmall.png')
         self.logo2.setPixmap(pix2.scaled(self.logo1.size()))
+        QCoreApplication.processEvents()
 
     def handleButtons(self):
         self.btnLogout.clicked.connect(self.logout)
         self.btnscanner.clicked.connect(self.editSettings)
         self.QTxtRef.setEnabled(False)
         self.QTxtRef.textChanged.connect(self.updateStyleSheetRef)
+        self.stats.clicked.connect(self.statistics)
 
     def updateStyleSheetRef(self):
         if len(self.QTxtRef.text())>0:
@@ -342,6 +348,9 @@ class User(QMainWindow,USER_UI):
         editPin.setWindowIcon(QIcon('../assets/logo-scroll.png'))
         editPin.exec_()
         editPin.close()
+
+    def statistics(self):
+        self.switchWindow2.emit(self.login)
         
 class Statistics(QMainWindow,STATS_UI):
     switchWindow = pyqtSignal(str)
@@ -350,6 +359,7 @@ class Statistics(QMainWindow,STATS_UI):
         super(Statistics, self).__init__(arg)
         QMainWindow.__init__(self)
         self.loaded = False
+        self.date_type = 'day'
         self.login = login
         self.setupUi(self)
         self.handleUI()
@@ -370,14 +380,23 @@ class Statistics(QMainWindow,STATS_UI):
         refList = hist['reference'].unique()
         self.users.addItems(userList)
         self.products.addItems(refList)
+        self.userstime.addItems(userList)
         self.userPlot()
         self.productPlot()
+        self.datePlot(self.radioButton1)
+        self.usersTimePlot()
+        QCoreApplication.processEvents()
+
 
     def handleButtons(self):
         self.btnback.clicked.connect(self.back)
         self.users.activated.connect(self.userPlot)
         self.products.activated.connect(self.productPlot)
-
+        self.userstime.activated.connect(self.usersTimePlot)
+        self.radioButton1.toggled.connect(lambda: self.datePlot(self.radioButton1))
+        self.radioButton2.toggled.connect(lambda: self.datePlot(self.radioButton2))
+        self.radioButton3.toggled.connect(lambda: self.datePlot(self.radioButton3))
+        self.radioButton4.toggled.connect(lambda: self.datePlot(self.radioButton4))
 
     def handleHeaders(self):
         date = datetime.datetime.now()
@@ -392,17 +411,33 @@ class Statistics(QMainWindow,STATS_UI):
         plotNumberOfScans('username',user)
         self.drawPlots()
 
+    def usersTimePlot(self):
+        user = str(self.userstime.currentText())
+        plotDate(self.date_type,user=user)
+        self.drawPlots()
+
+
     def productPlot(self):
         ref = str(self.products.currentText())
         plotNumberOfScans('reference',ref)
         self.drawPlots()
 
+    def datePlot(self,b):
+        if b.isChecked():
+            self.date_type = b.text()[3:] 
+            plotDate(self.date_type)
+            self.drawPlots()
+
     def drawPlots(self):
         try:
             pix1 =  QPixmap('../assets/username.png')
             pix2 =  QPixmap('../assets/reference.png')
+            pix3 =  QPixmap('../assets/date.png')
+            pix4 =  QPixmap('../assets/userdate.png')
             self.g1.setPixmap(pix1.scaled(self.g1.size()))
             self.g2.setPixmap(pix2.scaled(self.g2.size()))
+            self.g3.setPixmap(pix3.scaled(self.g3.size()))
+            self.g4.setPixmap(pix4.scaled(self.g4.size()))
         except Exception as e:
             print('err')
         QCoreApplication.processEvents()

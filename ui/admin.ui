@@ -34,6 +34,18 @@ font: 25 12pt &quot;Yu Gothic UI Semibold&quot;;
         </item>
         <item>
          <widget class="QLabel" name="logo1">
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>70</width>
+            <height>70</height>
+           </size>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -47,6 +59,18 @@ font: 25 12pt &quot;Yu Gothic UI Semibold&quot;;
         </item>
         <item>
          <widget class="QLabel" name="logo2">
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>70</width>
+            <height>70</height>
+           </size>
+          </property>
           <property name="text">
            <string/>
           </property>

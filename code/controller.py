@@ -54,7 +54,7 @@ class Controller:
             self.user.handleHeaders()
             if not self.user.loaded:
                 self.user.switchWindow.connect(self.showLogin)
-                # self.user.switchWindow2.connect(self.showScan)
+                self.user.switchWindow2.connect(self.showStats)
                 self.user.sendsignal.connect(self.sendToOutput)
                 self.user.loaded = True
             self.serialPort = SerialPort()
