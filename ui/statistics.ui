@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1430</width>
+    <width>1450</width>
     <height>815</height>
    </rect>
   </property>
@@ -132,13 +132,6 @@ font: 25 12pt &quot;Yu Gothic UI Semibold&quot;;
        </spacer>
       </item>
       <item>
-       <widget class="Line" name="line_3">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
          <widget class="QLabel" name="label_4">
@@ -237,6 +230,18 @@ font: 25 12pt &quot;Yu Gothic UI Semibold&quot;;
       </item>
       <item>
        <widget class="Line" name="line">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>10</width>
+          <height>10</height>
+         </size>
+        </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -336,6 +341,19 @@ font: 25 12pt &quot;Yu Gothic UI Semibold&quot;;
      </layout>
     </item>
     <item>
+     <widget class="Line" name="line_5">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>10</height>
+       </size>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
      <layout class="QHBoxLayout" name="horizontalLayout_8">
       <property name="topMargin">
        <number>21</number>
@@ -357,19 +375,12 @@ font: 25 12pt &quot;Yu Gothic UI Semibold&quot;;
        </spacer>
       </item>
       <item>
-       <widget class="Line" name="line_4">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
          <widget class="QRadioButton" name="radioButton1">
           <property name="maximumSize">
            <size>
-            <width>200</width>
+            <width>150</width>
             <height>16777215</height>
            </size>
           </property>
@@ -388,7 +399,7 @@ font: 25 12pt &quot;Yu Gothic UI Semibold&quot;;
          <widget class="QRadioButton" name="radioButton2">
           <property name="maximumSize">
            <size>
-            <width>200</width>
+            <width>150</width>
             <height>16777215</height>
            </size>
           </property>
@@ -401,7 +412,7 @@ font: 25 12pt &quot;Yu Gothic UI Semibold&quot;;
          <widget class="QRadioButton" name="radioButton3">
           <property name="maximumSize">
            <size>
-            <width>200</width>
+            <width>150</width>
             <height>16777215</height>
            </size>
           </property>
@@ -414,7 +425,7 @@ font: 25 12pt &quot;Yu Gothic UI Semibold&quot;;
          <widget class="QRadioButton" name="radioButton4">
           <property name="maximumSize">
            <size>
-            <width>200</width>
+            <width>150</width>
             <height>16777215</height>
            </size>
           </property>
@@ -437,7 +448,7 @@ font: 25 12pt &quot;Yu Gothic UI Semibold&quot;;
           </property>
           <property name="maximumSize">
            <size>
-            <width>500</width>
+            <width>495</width>
             <height>300</height>
            </size>
           </property>
@@ -453,6 +464,18 @@ font: 25 12pt &quot;Yu Gothic UI Semibold&quot;;
       </item>
       <item>
        <widget class="Line" name="line_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>10</width>
+          <height>10</height>
+         </size>
+        </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -535,6 +558,19 @@ font: 25 12pt &quot;Yu Gothic UI Semibold&quot;;
        </layout>
       </item>
      </layout>
+    </item>
+    <item>
+     <widget class="Line" name="line_6">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>10</height>
+       </size>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_7">

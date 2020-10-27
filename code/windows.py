@@ -307,6 +307,7 @@ class User(QMainWindow,USER_UI):
 
     def recieveData(self,data):
         if data.startswith('ref'):
+            data = data[:4]
             self.last_ref = data
             self.movie.stop()
             # self.label.setPixmap()
@@ -328,9 +329,13 @@ class User(QMainWindow,USER_UI):
             QCoreApplication.processEvents()
 
     def sendData(self,data):
-        res = pd.read_csv('../files/references.csv')
-        code = res[res['reference'] == data]['code'].item()
-        self.sendsignal.emit(str(code))
+        try:
+            res = pd.read_csv('../files/references.csv')
+            code = res[res['reference'] == data]['code'].item()
+            self.sendsignal.emit(str(code))
+        except Exception as e:
+            pass
+        
 
     def editSettings(self):
         # edit scanner

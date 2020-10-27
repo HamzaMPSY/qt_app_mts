@@ -10,8 +10,16 @@ class Controller:
         self.open_admin = False
         self.open_user = False
         self.open_stats = False
+        self.serialPort = SerialPort()
+        self.serialPort.moveToThread(self.serialThread)
 
     def showLogin(self):
+        if self.serialPort.ComPort is None:
+            self.serialPort.portConnect()
+        try:
+            self.serialPort.close()
+        except Exception as e:
+            print("error PORT :",e)
         self.login.QTxtLogin.setText('')
         self.login.QTxtPass.setText('')
         if not self.login.loaded:
@@ -57,9 +65,10 @@ class Controller:
                 self.user.switchWindow2.connect(self.showStats)
                 self.user.sendsignal.connect(self.sendToOutput)
                 self.user.loaded = True
-            self.serialPort = SerialPort()
-            self.serialPort.moveToThread(self.serialThread)
-            self.serialPort.signal.connect(self.user.recieveData)
+            self.serialPort.open()
+            if not self.serialPort.is_connected:
+                self.serialPort.signal.connect(self.user.recieveData)
+                self.serialPort.is_connected = True
             self.serialThread.started.connect(self.serialPort.readSerialPort)
             self.serialThread.setTerminationEnabled(True)
             self.serialThread.start()
@@ -86,7 +95,7 @@ class Controller:
             self.scan.switchWindow.connect(self.showUser)
             self.scan.loaded = True
 
-        self.serialPort = SerialPort()
+        # self.serialPort = SerialPort()
         self.serialPort.moveToThread(self.serialThread)
         self.serialPort.signal.connect(self.scan.recieveData)
         self.serialThread.started.connect(self.serialPort.readSerialPort)
@@ -97,6 +106,10 @@ class Controller:
         self.scan.show()
 
     def showStats(self,text):
+        try:
+            self.serialPort.close()
+        except Exception as e:
+            print("error PORT :",e)
         if not self.open_stats:
             self.stats = Statistics('')
             self.open_stats = True

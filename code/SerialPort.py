@@ -13,6 +13,7 @@ class SerialPort(QObject):
         self.portName = res['name'].item()
         self.ComPort = None
         self.portConnect()
+        self.is_connected = False
 
     def portConnect(self):
         try:
@@ -34,7 +35,7 @@ class SerialPort(QObject):
                     if data != "":
                         self.signal.emit(data)
                 except Exception as e:
-                    self.portConnect()
+                    self.open()
                 time.sleep(1)
         print ("Finish reading from port")
     
@@ -44,3 +45,13 @@ class SerialPort(QObject):
                 self.ComPort.write(data.encode())
         except Exception as e:
             print("Port not connect yet")
+
+    def open(self):
+        try:
+            self.ComPort.open()
+        except Exception as e:
+            pass
+
+    def close(self):
+        # if self.ComPort.is_open:
+        self.ComPort.close()
