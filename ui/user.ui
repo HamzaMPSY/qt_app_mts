@@ -30,12 +30,15 @@ font: 25 12pt &quot;Yu Gothic UI Semibold&quot;;
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>4</number>
+      </property>
       <item>
        <widget class="QLabel" name="logo1">
         <property name="minimumSize">
          <size>
-          <width>70</width>
-          <height>70</height>
+          <width>90</width>
+          <height>90</height>
          </size>
         </property>
         <property name="maximumSize">
@@ -49,31 +52,6 @@ font: 25 12pt &quot;Yu Gothic UI Semibold&quot;;
         </property>
         <property name="pixmap">
          <pixmap>../assets/logo-small.png</pixmap>
-        </property>
-        <property name="scaledContents">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="logo2">
-        <property name="minimumSize">
-         <size>
-          <width>70</width>
-          <height>70</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>70</width>
-          <height>70</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap>../assets/logo-csmall.png</pixmap>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
@@ -94,7 +72,58 @@ font: 25 12pt &quot;Yu Gothic UI Semibold&quot;;
        </spacer>
       </item>
       <item>
+       <widget class="QLabel" name="logo2">
+        <property name="minimumSize">
+         <size>
+          <width>90</width>
+          <height>90</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>70</width>
+          <height>70</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>../assets/logo-csmall.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <property name="topMargin">
+       <number>1</number>
+      </property>
+      <item>
+       <spacer name="horizontalSpacer_11">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
        <widget class="QLabel" name="usernameLabel">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>40</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
@@ -102,6 +131,22 @@ font: 25 12pt &quot;Yu Gothic UI Semibold&quot;;
          <string>UserName</string>
         </property>
        </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_12">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>10</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </item>

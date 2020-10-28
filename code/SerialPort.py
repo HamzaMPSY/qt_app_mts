@@ -9,7 +9,7 @@ class SerialPort(QObject):
         super(SerialPort, self).__init__(parent)
         #initialization and open the port
         pins = pd.read_csv('../files/settings.csv')
-        res = pins[(pins['purpose'] == 'PLC')]
+        res = pins[(pins['purpose'] == 'CPU')]
         self.portName = res['name'].item()
         self.ComPort = None
         self.portConnect()

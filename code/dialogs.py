@@ -132,6 +132,7 @@ class AddRefDialog(QDialog):
         self.login = login
         self.reference = QLineEdit(self)
         self.code = QLineEdit(self)
+        self.button = QLineEdit(self)
         
         buttonBox = QDialogButtonBox(Qt.Horizontal)
         buttonBox.addButton("Save", QDialogButtonBox.AcceptRole)
@@ -140,6 +141,7 @@ class AddRefDialog(QDialog):
         layout = QFormLayout(self)
         layout.addRow("Reference :", self.reference)
         layout.addRow("Code :", self.code)
+        layout.addRow("Button :", self.button)
         layout.addWidget(buttonBox)
 
         buttonBox.accepted.connect(self.save)
@@ -147,7 +149,7 @@ class AddRefDialog(QDialog):
 
     def save(self):
         df = pd.read_csv('../files/references.csv')
-        df.loc[df.shape[0]+1] = [self.reference.text(),self.code.text()]
+        df.loc[df.shape[0]+1] = [self.reference.text(),self.code.text(),self.button.text()]
         df.to_csv('../files/references.csv',index=False)
         self.close()
 
@@ -161,12 +163,15 @@ class EditRefDialog(QDialog):
         self.login = login
         self.reference = QLineEdit(self)
         self.code = QLineEdit(self)
+        self.button = QLineEdit(self)
         self.row=row
         res = pd.read_csv('../files/references.csv').iloc[row,:]
         reference = res['reference']
         code = res['code']
+        button = res['button']
         self.reference.setText(reference)
         self.code.setText(str(code))
+        self.button.setText(button)
         
         buttonBox = QDialogButtonBox(Qt.Horizontal)
         buttonBox.addButton("Save", QDialogButtonBox.AcceptRole)
@@ -176,6 +181,7 @@ class EditRefDialog(QDialog):
         layout = QFormLayout(self)
         layout.addRow("reference :", self.reference)
         layout.addRow("code :", self.code)
+        layout.addRow("Button :", self.button)
         layout.addWidget(buttonBox)
 
         buttonBox.accepted.connect(self.save)
@@ -186,6 +192,7 @@ class EditRefDialog(QDialog):
         df = pd.read_csv('../files/references.csv')
         df.ix[self.row,'reference'] = self.reference.text()
         df.ix[self.row,'code'] = self.code.text()
+        df.ix[self.row,'button'] = self.button.text()
         df.to_csv('../files/references.csv',index=False)
         self.close()
 

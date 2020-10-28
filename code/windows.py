@@ -43,7 +43,7 @@ class MainApp(QMainWindow,LOGIN_UI):
         self.handleLogin()
         
     def handleUI(self):
-        self.setWindowTitle('MTS Scanner')
+        self.setWindowTitle('Pick to light System')
         self.showMaximized()
         self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
         pix1 =  QPixmap('../assets/logo-s.png')
@@ -68,7 +68,6 @@ class MainApp(QMainWindow,LOGIN_UI):
             else:
                 QMessageBox.warning(self,"Error","Login or Password incorrect!")
         
-
 class Admin(QMainWindow,ADMIN_UI):
     switchWindow = pyqtSignal()
     switchWindow2 = pyqtSignal(str)
@@ -87,13 +86,13 @@ class Admin(QMainWindow,ADMIN_UI):
         self.ref_click_flag = True
 
     def handleUI(self):
-        self.setWindowTitle('MTS Scanner : Admin Control Panel')
+        self.setWindowTitle('Pick to light System : Admin Control Panel')
         self.showMaximized()
         self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
         pix1 =  QPixmap('../assets/logo-small.png')
         self.logo1.setPixmap(pix1.scaled(self.logo1.size()))
         pix2 =  QPixmap('../assets/logo-csmall.png')
-        self.logo2.setPixmap(pix2.scaled(self.logo1.size()))
+        self.logo2.setPixmap(pix2.scaled(self.logo2.size()))
         QCoreApplication.processEvents()
 
     def handleButtons(self):
@@ -158,6 +157,7 @@ class Admin(QMainWindow,ADMIN_UI):
         editDialog = EditDialog(row,self.login)
         editDialog.setWindowTitle('Edit User')
         editDialog.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        editDialog.resize(380,180)
         editDialog.exec_()
         editDialog.close()
         self.users()
@@ -166,6 +166,7 @@ class Admin(QMainWindow,ADMIN_UI):
         addUserDialog = AddDialog(self.login)
         addUserDialog.setWindowTitle('Add User')
         addUserDialog.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        addUserDialog.resize(380,180)
         addUserDialog.exec_()
         addUserDialog.close()
         self.users()
@@ -198,6 +199,7 @@ class Admin(QMainWindow,ADMIN_UI):
         editPin = PinDialog(row,self.login,is_admin = True)
         editPin.setWindowTitle('Edit Port')
         editPin.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        editPin.resize(380,180)
         editPin.exec_()
         editPin.close()
         self.pins()
@@ -206,6 +208,7 @@ class Admin(QMainWindow,ADMIN_UI):
         addPin = AddPinDialog(self.login)
         addPin.setWindowTitle('Add Port')
         addPin.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        addPin.resize(380,180)
         addPin.exec_()
         addPin.close()
         self.pins()
@@ -238,6 +241,7 @@ class Admin(QMainWindow,ADMIN_UI):
         editRef = EditRefDialog(row,self.login)
         editRef.setWindowTitle('Edit Reference')
         editRef.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        editRef.resize(380,180)
         editRef.exec_()
         editRef.close()
         self.references()
@@ -246,6 +250,7 @@ class Admin(QMainWindow,ADMIN_UI):
         addRef = AddRefDialog(self.login)
         addRef.setWindowTitle('Add Reference')
         addRef.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        addRef.resize(380,180)
         addRef.exec_()
         addRef.close()
         self.references()
@@ -270,7 +275,7 @@ class User(QMainWindow,USER_UI):
         self.handleHeaders()
 
     def handleUI(self):
-        self.setWindowTitle('MTS Scanner : User')
+        self.setWindowTitle('Pick to light System : User')
         self.showMaximized()
         self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
         self.movie = QMovie('../assets/tenor.gif')
@@ -308,26 +313,46 @@ class User(QMainWindow,USER_UI):
     def recieveData(self,data):
         if data.startswith('ref'):
             data = data[:4]
-            self.last_ref = data
-            self.movie.stop()
-            # self.label.setPixmap()
-            pix =  QPixmap('../assets/'+data+'.jpg')
-            self.label.setPixmap(pix.scaled(self.label.size()))
-            self.QTxtRef.setText(data)
-            self.sendData(data)
+            res = pd.read_csv('../files/references.csv')
+            references = res['reference'].items()
+            if data in references:
+                self.last_ref = data
+                self.movie.stop()
+                # self.label.setPixmap()
+                pix =  QPixmap('../assets/'+data+'.jpg')
+                self.label.setPixmap(pix.scaled(self.label.size()))
+                self.QTxtRef.setText(data)
+                self.sendData(data)
+            else:
+                QMessageBox.warning(self,"Error","Reference not found!")
         else:
-            logs(self.login,self.last_ref,data)
+            # logs(self.login,self.last_ref,data)
+            self.attemps += 1
             data = data.lower()
-            pix =  QPixmap('../assets/'+data+'.png')
-            self.state.setPixmap(pix)#.scaled(self.state.size()))
-            QCoreApplication.processEvents()
-            time.sleep(3)
-            self.label.setMovie(self.movie)
-            self.movie.start()
-            self.state.setText(" ")
-            self.QTxtRef.setText("")
-            QCoreApplication.processEvents()
-
+            res = pd.read_csv('../files/references.csv')
+            button = res[res['reference'] == self.last_ref].item()
+            if button != data :
+                pix =  QPixmap('../assets/nok.png')
+                self.state.setPixmap(pix)#.scaled(self.state.size()))
+                QCoreApplication.processEvents()
+            elif button == data:
+                pix =  QPixmap('../assets/ok.png')
+                self.state.setPixmap(pix)#.scaled(self.state.size()))
+                QCoreApplication.processEvents()
+                time.sleep(3)
+                self.label.setMovie(self.movie)
+                self.movie.start()
+                self.state.setText(" ")
+                self.QTxtRef.setText("")
+                self.attemps = 0
+                QCoreApplication.processEvents()
+            if self.attemps == 3:
+                self.label.setMovie(self.movie)
+                self.movie.start()
+                self.state.setText(" ")
+                self.QTxtRef.setText("")
+                self.attemps = 0
+                QCoreApplication.processEvents()
     def sendData(self,data):
         try:
             res = pd.read_csv('../files/references.csv')
@@ -344,13 +369,15 @@ class User(QMainWindow,USER_UI):
         editPin = PinDialog(row,self.login,is_admin = False)
         editPin.setWindowTitle('Edit Port')
         editPin.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        editPin.resize(380,180)
         editPin.exec_()
         editPin.close()
         # edit plc
-        row = list(res[res['purpose'] == 'PLC'].index)[0]
+        row = list(res[res['purpose'] == 'CPU'].index)[0]
         editPin = PinDialog(row,self.login,is_admin = False)
         editPin.setWindowTitle('Edit Port')
         editPin.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        editPin.resize(380,180)
         editPin.exec_()
         editPin.close()
 
@@ -373,7 +400,7 @@ class Statistics(QMainWindow,STATS_UI):
         # self.drawPlots()
         
     def handleUI(self):
-        self.setWindowTitle('MTS Scanner: Statistics')
+        self.setWindowTitle('Pick to light System: Statistics')
         self.showMaximized()
         self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
         pix1 =  QPixmap('../assets/logo-s.png')
@@ -465,7 +492,7 @@ class Statistics(QMainWindow,STATS_UI):
 #         self.handleHeaders()
 
 #     def handleUI(self):
-#         self.setWindowTitle('MTS Scanner : Scan')
+#         self.setWindowTitle('Pick to light System : Scan')
 #         self.showMaximized()
 #         self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
 
