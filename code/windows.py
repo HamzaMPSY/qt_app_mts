@@ -273,6 +273,7 @@ class User(QMainWindow,USER_UI):
         self.handleUI()
         self.handleButtons()
         self.handleHeaders()
+        self.attemps = 0
 
     def handleUI(self):
         self.setWindowTitle('Pick to light System : User')
@@ -314,7 +315,7 @@ class User(QMainWindow,USER_UI):
         if data.startswith('ref'):
             data = data[:4]
             res = pd.read_csv('../files/references.csv')
-            references = res['reference'].items()
+            references = res['reference'].tolist()
             if data in references:
                 self.last_ref = data
                 self.movie.stop()
@@ -330,10 +331,13 @@ class User(QMainWindow,USER_UI):
             self.attemps += 1
             data = data.lower()
             res = pd.read_csv('../files/references.csv')
-            button = res[res['reference'] == self.last_ref].item()
+            button = res["button"][res['reference'] == self.last_ref].item()
             if button != data :
                 pix =  QPixmap('../assets/nok.png')
                 self.state.setPixmap(pix)#.scaled(self.state.size()))
+                QCoreApplication.processEvents()
+                time.sleep(3)
+                self.state.setText("Try again")
                 QCoreApplication.processEvents()
             elif button == data:
                 pix =  QPixmap('../assets/ok.png')

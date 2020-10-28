@@ -60,6 +60,7 @@ class Controller:
             self.user.QTxtRef.setText('')
             self.user.login = text
             self.user.handleHeaders()
+            self.user.handleUI()
             if not self.user.loaded:
                 self.user.switchWindow.connect(self.showLogin)
                 self.user.switchWindow2.connect(self.showStats)
