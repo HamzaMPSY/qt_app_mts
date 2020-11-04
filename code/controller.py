@@ -13,8 +13,10 @@ class Controller:
         self.open_admin = False
         self.open_user = False
         self.open_stats = False
-        self.serialPort = SerialPort()
+        self.serialPort = SerialPort('CPU')
+        self.scanner = SerialPort('Scanner')
         self.serialPort.moveToThread(self.serialThread)
+        self.scanner.moveToThread(self.serialThread)
 
     def showLogin(self):
         if self.serialPort.ComPort is None:

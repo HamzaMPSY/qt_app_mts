@@ -7,11 +7,11 @@ home_path = os.path.dirname(os.path.realpath(__file__))
 
 class SerialPort(QObject):
     
-    def __init__(self, parent = None):
+    def __init__(self, purpose , parent = None):
         super(SerialPort, self).__init__(parent)
         #initialization and open the port
         pins = pd.read_csv(home_path[:-4]+'/files/settings.csv')
-        res = pins[(pins['purpose'] == 'CPU')]
+        res = pins[(pins['purpose'] == purpose)]
         self.portName = res['name'].item()
         self.ComPort = None
         self.portConnect()
