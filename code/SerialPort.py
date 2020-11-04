@@ -2,13 +2,15 @@ import serial
 from PyQt5.QtCore import *
 import time
 import pandas as pd
+import os
+home_path = os.path.dirname(os.path.realpath(__file__))
 
 class SerialPort(QObject):
     
     def __init__(self, parent = None):
         super(SerialPort, self).__init__(parent)
         #initialization and open the port
-        pins = pd.read_csv('../files/settings.csv')
+        pins = pd.read_csv(home_path[:-4]+'/files/settings.csv')
         res = pins[(pins['purpose'] == 'CPU')]
         self.portName = res['name'].item()
         self.ComPort = None

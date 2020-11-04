@@ -3,6 +3,9 @@ import pandas as pd
 from SerialPort import *
 import time
 
+import os
+home_path = os.path.dirname(os.path.realpath(__file__))
+
 class Controller:
     def __init__(self):
         self.login = MainApp()
@@ -37,7 +40,7 @@ class Controller:
             self.serialThread.terminate()
         except Exception as e:
             print(e)
-        users = pd.read_csv('../files/users.csv')
+        users = pd.read_csv(home_path[:-4]+'/files/users.csv')
         res = users[(users['username'] == text)]
         if res['username'].item() == "admin":
             if not self.open_admin:

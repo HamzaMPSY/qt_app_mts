@@ -12,15 +12,15 @@ import os
 import time
 
 
-
 LOGIN_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/login.ui"))
 ADMIN_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/admin.ui"))
-USER_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/user.ui"))
+USER_UI,_ = loadUiType(path.join(path.dirname(__file__),"../ui/user.ui"))
 STATS_UI,_= loadUiType(path.join(path.dirname(__file__),"../ui/statistics.ui"))
 
+home_path = os.path.dirname(os.path.realpath(__file__))
 
 def logs(username, reference,response):
-    path = '../files/history.csv'
+    path = home_path[:-4] + '/files/history.csv'
     if not os.path.isfile(path):
         logs = open(path, 'w')
         logs.write("username,date,reference,response\n")
@@ -45,10 +45,10 @@ class MainApp(QMainWindow,LOGIN_UI):
     def handleUI(self):
         self.setWindowTitle('Pick to light System')
         self.showMaximized()
-        self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
-        pix1 =  QPixmap('../assets/logo-s.png')
+        self.setWindowIcon(QIcon(home_path[:-4] +'/assets/logo-scroll.png'))
+        pix1 =  QPixmap(home_path[:-4] +'/assets/logo-s.png')
         self.logo1.setPixmap(pix1.scaled(self.logo1.size()))
-        pix2 =  QPixmap('../assets/logo-c.jpg')
+        pix2 =  QPixmap(home_path[:-4] +'/assets/logo-c.jpg')
         self.logo2.setPixmap(pix2.scaled(self.logo1.size()))
     
     def handleLogin(self):
@@ -60,7 +60,7 @@ class MainApp(QMainWindow,LOGIN_UI):
         if login == '' or password == '':
             QMessageBox.warning(self,"Error","Please complete all fields!")
         else:
-            users = pd.read_csv('../files/users.csv')
+            users = pd.read_csv(home_path[:-4] +'/files/users.csv')
             res = users[(users['username'] == login) & (users['password'] == password)]
             if res.shape[0] >= 1 :
                 # logs(login, "login") 
@@ -88,10 +88,10 @@ class Admin(QMainWindow,ADMIN_UI):
     def handleUI(self):
         self.setWindowTitle('Pick to light System : Admin Control Panel')
         self.showMaximized()
-        self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
-        pix1 =  QPixmap('../assets/logo-small.png')
+        self.setWindowIcon(QIcon(home_path[:-4] +'/assets/logo-scroll.png'))
+        pix1 =  QPixmap(home_path[:-4] +'/assets/logo-small.png')
         self.logo1.setPixmap(pix1.scaled(self.logo1.size()))
-        pix2 =  QPixmap('../assets/logo-csmall.png')
+        pix2 =  QPixmap(home_path[:-4] +'/assets/logo-csmall.png')
         self.logo2.setPixmap(pix2.scaled(self.logo2.size()))
         QCoreApplication.processEvents()
 
@@ -121,7 +121,7 @@ class Admin(QMainWindow,ADMIN_UI):
         except Exception :
             pass
         self.btnadduser.clicked.connect(self.adduser)
-        users = pd.read_csv('../files/users.csv')
+        users = pd.read_csv(home_path[:-4] +'/files/users.csv')
         model = pandasModel(users)
         self.tableView.setModel(model)
         self.tableView.horizontalHeader().setStretchLastSection(True) 
@@ -138,7 +138,7 @@ class Admin(QMainWindow,ADMIN_UI):
 
     def history(self):
         self.btnadduser.hide()
-        logs = pd.read_csv('../files/history.csv')
+        logs = pd.read_csv(home_path[:-4] +'/files/history.csv')
         model = pandasModel(logs)
         self.tableView.setModel(model)
         self.tableView.horizontalHeader().setStretchLastSection(True) 
@@ -156,7 +156,7 @@ class Admin(QMainWindow,ADMIN_UI):
         row = item.row()
         editDialog = EditDialog(row,self.login)
         editDialog.setWindowTitle('Edit User')
-        editDialog.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        editDialog.setWindowIcon(QIcon(home_path[:-4] +'/assets/logo-scroll.png'))
         editDialog.resize(380,180)
         editDialog.exec_()
         editDialog.close()
@@ -165,7 +165,7 @@ class Admin(QMainWindow,ADMIN_UI):
     def adduser(self):
         addUserDialog = AddDialog(self.login)
         addUserDialog.setWindowTitle('Add User')
-        addUserDialog.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        addUserDialog.setWindowIcon(QIcon(home_path[:-4] +'/assets/logo-scroll.png'))
         addUserDialog.resize(380,180)
         addUserDialog.exec_()
         addUserDialog.close()
@@ -179,7 +179,7 @@ class Admin(QMainWindow,ADMIN_UI):
         except Exception :
             pass
         self.btnadduser.clicked.connect(self.addpin)
-        pins = pd.read_csv('../files/settings.csv')
+        pins = pd.read_csv(home_path[:-4] +'/files/settings.csv')
         model = pandasModel(pins)
         self.tableView.setModel(model)
         self.tableView.horizontalHeader().setStretchLastSection(True) 
@@ -198,7 +198,7 @@ class Admin(QMainWindow,ADMIN_UI):
         row = item.row()
         editPin = PinDialog(row,self.login,is_admin = True)
         editPin.setWindowTitle('Edit Port')
-        editPin.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        editPin.setWindowIcon(QIcon(home_path[:-4] +'/assets/logo-scroll.png'))
         editPin.resize(380,180)
         editPin.exec_()
         editPin.close()
@@ -207,7 +207,7 @@ class Admin(QMainWindow,ADMIN_UI):
     def addpin(self):
         addPin = AddPinDialog(self.login)
         addPin.setWindowTitle('Add Port')
-        addPin.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        addPin.setWindowIcon(QIcon(home_path[:-4] +'/assets/logo-scroll.png'))
         addPin.resize(380,180)
         addPin.exec_()
         addPin.close()
@@ -221,7 +221,7 @@ class Admin(QMainWindow,ADMIN_UI):
         except Exception :
             pass
         self.btnadduser.clicked.connect(self.addrefrence)
-        refereces = pd.read_csv('../files/references.csv')
+        refereces = pd.read_csv(home_path[:-4] +'/files/references.csv')
         model = pandasModel(refereces)
         self.tableView.setModel(model)
         self.tableView.horizontalHeader().setStretchLastSection(True) 
@@ -240,7 +240,7 @@ class Admin(QMainWindow,ADMIN_UI):
         row = item.row()
         editRef = EditRefDialog(row,self.login)
         editRef.setWindowTitle('Edit Reference')
-        editRef.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        editRef.setWindowIcon(QIcon(home_path[:-4] +'/assets/logo-scroll.png'))
         editRef.resize(380,180)
         editRef.exec_()
         editRef.close()
@@ -249,7 +249,7 @@ class Admin(QMainWindow,ADMIN_UI):
     def addrefrence(self):
         addRef = AddRefDialog(self.login)
         addRef.setWindowTitle('Add Reference')
-        addRef.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        addRef.setWindowIcon(QIcon(home_path[:-4] +'/assets/logo-scroll.png'))
         addRef.resize(380,180)
         addRef.exec_()
         addRef.close()
@@ -278,14 +278,14 @@ class User(QMainWindow,USER_UI):
     def handleUI(self):
         self.setWindowTitle('Pick to light System : User')
         self.showMaximized()
-        self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
-        self.movie = QMovie('../assets/tenor.gif')
+        self.setWindowIcon(QIcon(home_path[:-4] +'/assets/logo-scroll.png'))
+        self.movie = QMovie(home_path[:-4] +'/assets/tenor.gif')
         self.label.setMovie(self.movie)
         self.movie.start()
         self.state.setText(" ")
-        pix1 =  QPixmap('../assets/logo-small.png')
+        pix1 =  QPixmap(home_path[:-4] +'/assets/logo-small.png')
         self.logo1.setPixmap(pix1.scaled(self.logo1.size()))
-        pix2 =  QPixmap('../assets/logo-csmall.png')
+        pix2 =  QPixmap(home_path[:-4] +'/assets/logo-csmall.png')
         self.logo2.setPixmap(pix2.scaled(self.logo1.size()))
         QCoreApplication.processEvents()
 
@@ -314,13 +314,13 @@ class User(QMainWindow,USER_UI):
     def recieveData(self,data):
         if data.startswith('ref'):
             data = data[:4]
-            res = pd.read_csv('../files/references.csv')
+            res = pd.read_csv(home_path[:-4] +'/files/references.csv')
             references = res['reference'].tolist()
             if data in references:
                 self.last_ref = data
                 self.movie.stop()
                 # self.label.setPixmap()
-                pix =  QPixmap('../assets/'+data+'.jpg')
+                pix =  QPixmap(home_path[:-4] +'/assets/'+data+'.jpg')
                 self.label.setPixmap(pix.scaled(self.label.size()))
                 self.QTxtRef.setText(data)
                 self.sendData(data)
@@ -330,17 +330,17 @@ class User(QMainWindow,USER_UI):
             # logs(self.login,self.last_ref,data)
             self.attemps += 1
             data = data.lower()
-            res = pd.read_csv('../files/references.csv')
+            res = pd.read_csv(home_path[:-4] +'/files/references.csv')
             button = res["button"][res['reference'] == self.last_ref].item()
             if button != data :
-                pix =  QPixmap('../assets/nok.png')
+                pix =  QPixmap(home_path[:-4] +'/assets/nok.png')
                 self.state.setPixmap(pix)#.scaled(self.state.size()))
                 QCoreApplication.processEvents()
                 time.sleep(3)
                 self.state.setText("Try again")
                 QCoreApplication.processEvents()
             elif button == data:
-                pix =  QPixmap('../assets/ok.png')
+                pix =  QPixmap(home_path[:-4] +'/assets/ok.png')
                 self.state.setPixmap(pix)#.scaled(self.state.size()))
                 QCoreApplication.processEvents()
                 time.sleep(3)
@@ -359,7 +359,7 @@ class User(QMainWindow,USER_UI):
                 QCoreApplication.processEvents()
     def sendData(self,data):
         try:
-            res = pd.read_csv('../files/references.csv')
+            res = pd.read_csv(home_path[:-4] +'/files/references.csv')
             code = res[res['reference'] == data]['code'].item()
             self.sendsignal.emit(str(code))
         except Exception as e:
@@ -368,11 +368,11 @@ class User(QMainWindow,USER_UI):
 
     def editSettings(self):
         # edit scanner
-        res = pd.read_csv('../files/settings.csv')
+        res = pd.read_csv(home_path[:-4] +'/files/settings.csv')
         row = list(res[res['purpose'] == 'Scanner'].index)[0]
         editPin = PinDialog(row,self.login,is_admin = False)
         editPin.setWindowTitle('Edit Port')
-        editPin.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        editPin.setWindowIcon(QIcon(home_path[:-4] +'/assets/logo-scroll.png'))
         editPin.resize(380,180)
         editPin.exec_()
         editPin.close()
@@ -380,7 +380,7 @@ class User(QMainWindow,USER_UI):
         row = list(res[res['purpose'] == 'CPU'].index)[0]
         editPin = PinDialog(row,self.login,is_admin = False)
         editPin.setWindowTitle('Edit Port')
-        editPin.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+        editPin.setWindowIcon(QIcon(home_path[:-4] +'/assets/logo-scroll.png'))
         editPin.resize(380,180)
         editPin.exec_()
         editPin.close()
@@ -406,12 +406,12 @@ class Statistics(QMainWindow,STATS_UI):
     def handleUI(self):
         self.setWindowTitle('Pick to light System: Statistics')
         self.showMaximized()
-        self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
-        pix1 =  QPixmap('../assets/logo-s.png')
+        self.setWindowIcon(QIcon(home_path[:-4] +'/assets/logo-scroll.png'))
+        pix1 =  QPixmap(home_path[:-4] +'/assets/logo-s.png')
         self.logo1.setPixmap(pix1.scaled(self.logo1.size()))
-        pix2 =  QPixmap('../assets/logo-c.jpg')
+        pix2 =  QPixmap(home_path[:-4] +'/assets/logo-c.jpg')
         self.logo2.setPixmap(pix2.scaled(self.logo1.size()))
-        hist = pd.read_csv('../files/history.csv')
+        hist = pd.read_csv(home_path[:-4] +'/files/history.csv')
         userList = hist['username'].unique()
         refList = hist['reference'].unique()
         self.users.addItems(userList)
@@ -466,10 +466,10 @@ class Statistics(QMainWindow,STATS_UI):
 
     def drawPlots(self):
         try:
-            pix1 =  QPixmap('../assets/username.png')
-            pix2 =  QPixmap('../assets/reference.png')
-            pix3 =  QPixmap('../assets/date.png')
-            pix4 =  QPixmap('../assets/userdate.png')
+            pix1 =  QPixmap(home_path[:-4] +'/assets/username.png')
+            pix2 =  QPixmap(home_path[:-4] +'/assets/reference.png')
+            pix3 =  QPixmap(home_path[:-4] +'/assets/date.png')
+            pix4 =  QPixmap(home_path[:-4] +'/assets/userdate.png')
             self.g1.setPixmap(pix1.scaled(self.g1.size()))
             self.g2.setPixmap(pix2.scaled(self.g2.size()))
             self.g3.setPixmap(pix3.scaled(self.g3.size()))
@@ -498,13 +498,13 @@ class Statistics(QMainWindow,STATS_UI):
 #     def handleUI(self):
 #         self.setWindowTitle('Pick to light System : Scan')
 #         self.showMaximized()
-#         self.setWindowIcon(QIcon('../assets/logo-scroll.png'))
+#         self.setWindowIcon(QIcon(home_path[:-4] +'/assets/logo-scroll.png'))
 
 #     def handleButtons(self):
 #         self.btnBack.clicked.connect(self.back)
 #         self.btn_I_O.clicked.connect(self.IOmonitor)
 #         self.btnStatistic.clicked.connect(self.statistics)
-#         self.draw('../assets/step1.jpg')
+#         self.draw(home_path[:-4] +'/assets/step1.jpg')
 
 #     def handel_progressBar(self,):
 #         per = self.processed*100/self.quantity
@@ -531,13 +531,13 @@ class Statistics(QMainWindow,STATS_UI):
 #     def recieveData(self,data):
 #         if data == 'step1':
 #             self.step1.setStyleSheet('border: 10px solid #64de9d;background-color : #64de9d;')
-#             self.draw('../assets/step2.jpg')
+#             self.draw(home_path[:-4] +'/assets/step2.jpg')
 #         elif data == 'step2':
 #             self.step2.setStyleSheet('border: 10px solid #64de9d;background-color : #64de9d;')
-#             self.draw('../assets/step3.jpg')
+#             self.draw(home_path[:-4] +'/assets/step3.jpg')
 #         elif data == 'step3':
 #             self.step3.setStyleSheet('border: 10px solid #64de9d;background-color : #64de9d;')
-#             self.draw('../assets/step4.jpg')
+#             self.draw(home_path[:-4] +'/assets/step4.jpg')
 #         elif data == 'step4':
 #             self.step4.setStyleSheet('border: 10px solid #64de9d;background-color : #64de9d;')
 #             self.processed +=1
@@ -548,7 +548,7 @@ class Statistics(QMainWindow,STATS_UI):
 #             self.step2.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')
 #             self.step3.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')
 #             self.step4.setStyleSheet('border: 15px solid #e1eefa;background-color : #e1eefa;')
-#             self.draw('../assets/step1.jpg')
+#             self.draw(home_path[:-4] +'/assets/step1.jpg')
 #         if self.processed == self.quantity:
 #             # logs(self.login, "Finished all products with reference" + self.reference)
 #             self.back()

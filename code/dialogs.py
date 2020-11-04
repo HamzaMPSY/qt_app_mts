@@ -4,6 +4,8 @@ from PyQt5.QtCore import Qt
 import os
 import datetime
 
+home_path = os.path.dirname(os.path.realpath(__file__))
+
 class EditDialog(QDialog):
     def __init__(self,row,login, parent=None):
         super().__init__(parent)
@@ -11,7 +13,7 @@ class EditDialog(QDialog):
         self.username = QLineEdit(self)
         self.password = QLineEdit(self)
         self.row=row
-        res = pd.read_csv('../files/users.csv').iloc[row,:]
+        res = pd.read_csv(home_path[:-4] +'/files/users.csv').iloc[row,:]
         username = res['username']
         password = res['password']
         self.username.setText(username)
@@ -32,16 +34,16 @@ class EditDialog(QDialog):
         buttonBox.helpRequested.connect(self.delete)
 
     def save(self):
-        df = pd.read_csv('../files/users.csv')
+        df = pd.read_csv(home_path[:-4] +'/files/users.csv')
         df.ix[self.row,'username'] = self.username.text()
         df.ix[self.row,'password'] = self.password.text()
-        df.to_csv('../files/users.csv',index=False)
+        df.to_csv(home_path[:-4] +'/files/users.csv',index=False)
         self.close()
 
     def delete(self):
-        df = pd.read_csv('../files/users.csv')
+        df = pd.read_csv(home_path[:-4] +'/files/users.csv')
         df = df.drop([self.row],axis = 0)
-        df.to_csv('../files/users.csv',index=False)
+        df.to_csv(home_path[:-4] +'/files/users.csv',index=False)
         self.close()
 
     def cancel(self):
@@ -68,9 +70,9 @@ class AddDialog(QDialog):
         buttonBox.rejected.connect(self.cancel)
 
     def save(self):
-        df = pd.read_csv('../files/users.csv')
+        df = pd.read_csv(home_path[:-4] +'/files/users.csv')
         df.loc[df.shape[0]+1] = [self.username.text(),self.password.text()]
-        df.to_csv('../files/users.csv',index=False)
+        df.to_csv(home_path[:-4] +'/files/users.csv',index=False)
         
         self.close()
 
@@ -84,7 +86,7 @@ class PinDialog(QDialog):
         self.purpose = QLineEdit(self)
         self.name = QLineEdit(self)
         self.row=row
-        res = pd.read_csv('../files/settings.csv').iloc[row,:]
+        res = pd.read_csv(home_path[:-4] +'/files/settings.csv').iloc[row,:]
         purpose = res['purpose']
         name = res['name']
 
@@ -110,19 +112,19 @@ class PinDialog(QDialog):
 
 
     def save(self):
-        df = pd.read_csv('../files/settings.csv')
+        df = pd.read_csv(home_path[:-4] +'/files/settings.csv')
         df.ix[self.row,'purpose'] = self.purpose.text()
         df.ix[self.row,'name'] = self.name.text()
-        df.to_csv('../files/settings.csv',index=False)
+        df.to_csv(home_path[:-4] +'/files/settings.csv',index=False)
         self.close()
 
     def cancel(self):
         self.close()
 
     def delete(self):
-        df = pd.read_csv('../files/settings.csv')
+        df = pd.read_csv(home_path[:-4] +'/files/settings.csv')
         df = df.drop([self.row],axis = 0)
-        df.to_csv('../files/settings.csv',index=False)
+        df.to_csv(home_path[:-4] +'/files/settings.csv',index=False)
         self.close()
 
 
@@ -148,9 +150,9 @@ class AddRefDialog(QDialog):
         buttonBox.rejected.connect(self.cancel)
 
     def save(self):
-        df = pd.read_csv('../files/references.csv')
+        df = pd.read_csv(home_path[:-4] +'/files/references.csv')
         df.loc[df.shape[0]+1] = [self.reference.text(),self.code.text(),self.button.text()]
-        df.to_csv('../files/references.csv',index=False)
+        df.to_csv(home_path[:-4] +'/files/references.csv',index=False)
         self.close()
 
     def cancel(self):
@@ -165,7 +167,7 @@ class EditRefDialog(QDialog):
         self.code = QLineEdit(self)
         self.button = QLineEdit(self)
         self.row=row
-        res = pd.read_csv('../files/references.csv').iloc[row,:]
+        res = pd.read_csv(home_path[:-4] +'/files/references.csv').iloc[row,:]
         reference = res['reference']
         code = res['code']
         button = res['button']
@@ -189,17 +191,17 @@ class EditRefDialog(QDialog):
         buttonBox.helpRequested.connect(self.delete)
 
     def save(self):
-        df = pd.read_csv('../files/references.csv')
+        df = pd.read_csv(home_path[:-4] +'/files/references.csv')
         df.ix[self.row,'reference'] = self.reference.text()
         df.ix[self.row,'code'] = self.code.text()
         df.ix[self.row,'button'] = self.button.text()
-        df.to_csv('../files/references.csv',index=False)
+        df.to_csv(home_path[:-4] +'/files/references.csv',index=False)
         self.close()
 
     def delete(self):
-        df = pd.read_csv('../files/references.csv')
+        df = pd.read_csv(home_path[:-4] +'/files/references.csv')
         df = df.drop([self.row],axis = 0)
-        df.to_csv('../files/references.csv',index=False)
+        df.to_csv(home_path[:-4] +'/files/references.csv',index=False)
         self.close()
 
     def cancel(self):
@@ -225,9 +227,9 @@ class AddPinDialog(QDialog):
         buttonBox.rejected.connect(self.cancel)
 
     def save(self):
-        df = pd.read_csv('../files/settings.csv')
+        df = pd.read_csv(home_path[:-4] +'/files/settings.csv')
         df.loc[df.shape[0]+1] = [self.purpose.text(),self.name.text()]
-        df.to_csv('../files/settings.csv',index=False)
+        df.to_csv(home_path[:-4] +'/files/settings.csv',index=False)
         self.close()
 
     def cancel(self):
