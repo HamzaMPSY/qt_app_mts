@@ -9,22 +9,31 @@ home_path = os.path.dirname(os.path.realpath(__file__))
 class Controller:
     def __init__(self):
         self.login = MainApp()
-        self.serialThread = QThread()
+        self.cpuThread = QThread()
+        self.scannerThread = QThread()
         self.open_admin = False
         self.open_user = False
         self.open_stats = False
-        self.serialPort = SerialPort('CPU')
+        self.cpu = SerialPort('CPU')
         self.scanner = SerialPort('Scanner')
-        self.serialPort.moveToThread(self.serialThread)
-        self.scanner.moveToThread(self.serialThread)
+        self.cpu.moveToThread(self.cpuThread)
+        self.scanner.moveToThread(self.scannerThread)
 
     def showLogin(self):
-        if self.serialPort.ComPort is None:
-            self.serialPort.portConnect()
+        if self.cpu.ComPort is None:
+            self.cpu.portConnect()
         try:
-            self.serialPort.close()
+            self.cpu.close()
         except Exception as e:
-            print("error PORT :",e)
+            print("Error Port :",e)
+
+        if self.scanner.ComPort is None:
+            self.scanner.portConnect()
+        try:
+            self.scanner.close()
+        except Exception as e:
+            print("Error Port:",e)
+
         self.login.QTxtLogin.setText('')
         self.login.QTxtPass.setText('')
         if not self.login.loaded:
@@ -38,8 +47,10 @@ class Controller:
 
     def showUser(self,text):
         try:
-            self.serialThread.started.disconnect()
-            self.serialThread.terminate()
+            self.cpuThread.started.disconnect()
+            self.cpuThread.terminate()
+            self.scannerThread.started.disconnect()
+            self.scannerThread.terminate()
         except Exception as e:
             print(e)
         users = pd.read_csv(home_path[:-4]+'/files/users.csv')
@@ -71,13 +82,20 @@ class Controller:
                 self.user.switchWindow2.connect(self.showStats)
                 self.user.sendsignal.connect(self.sendToOutput)
                 self.user.loaded = True
-            self.serialPort.open()
-            if not self.serialPort.is_connected:
-                self.serialPort.signal.connect(self.user.recieveData)
-                self.serialPort.is_connected = True
-            self.serialThread.started.connect(self.serialPort.readSerialPort)
-            self.serialThread.setTerminationEnabled(True)
-            self.serialThread.start()
+            self.cpu.open()
+            self.scanner.open()
+            if not self.cpu.is_connected:
+                self.cpu.signal.connect(self.user.recieveData)
+                self.cpu.is_connected = True
+            if not self.scanner.is_connected:
+                self.scanner.signal.connect(self.user.recieveData)
+                self.scanner.is_connected = True
+            self.cpuThread.started.connect(self.cpu.readSerialPort)
+            self.scannerThread.started.connect(self.scanner.readSerialPort)
+            self.cpuThread.setTerminationEnabled(True)
+            self.cpuThread.start()
+            self.scannerThread.setTerminationEnabled(True)
+            self.scannerThread.start()
             self.login.close()
             if self.open_stats:
                 self.stats.close()
@@ -85,7 +103,7 @@ class Controller:
 
     def sendToOutput(self,data):
         print('[+]Sending',data,'to serial port')
-        self.serialPort.writeSerialPort(data)
+        self.cpu.writeSerialPort(data)
 
     def showScan(self,text):
         if not self.open_scan:
@@ -101,12 +119,18 @@ class Controller:
             self.scan.switchWindow.connect(self.showUser)
             self.scan.loaded = True
 
-        # self.serialPort = SerialPort()
-        self.serialPort.moveToThread(self.serialThread)
-        self.serialPort.signal.connect(self.scan.recieveData)
-        self.serialThread.started.connect(self.serialPort.readSerialPort)
-        self.serialThread.setTerminationEnabled(True)
-        self.serialThread.start()
+        self.cpu.moveToThread(self.cpuThread)
+        self.cpu.signal.connect(self.scan.recieveData)
+        self.cpuThread.started.connect(self.cpu.readSerialPort)
+        self.cpuThread.setTerminationEnabled(True)
+        self.cpuThread.start()
+
+        self.scanner.moveToThread(self.scannerThread)
+        self.scanner.signal.connect(self.scan.recieveData)
+        self.scannerThread.started.connect(self.scanner.readSerialPort)
+        self.scannerThread.setTerminationEnabled(True)
+        self.scannerThread.start()
+
         self.user.close()
         time.sleep(0.5)
         self.scan.show()

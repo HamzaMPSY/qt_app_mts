@@ -313,26 +313,26 @@ class User(QMainWindow,USER_UI):
 
     def recieveData(self,data):
         if data.startswith('ref'):
-            data = data[:4]
+            # data = data[:4]
             res = pd.read_csv(home_path[:-4] +'/files/references.csv')
             references = res['reference'].tolist()
             if data in references:
                 self.last_ref = data
                 self.movie.stop()
-                # self.label.setPixmap()
                 pix =  QPixmap(home_path[:-4] +'/assets/'+data+'.jpg')
                 self.label.setPixmap(pix.scaled(self.label.size()))
                 self.QTxtRef.setText(data)
                 self.sendData(data)
+                QCoreApplication.processEvents()
             else:
                 QMessageBox.warning(self,"Error","Reference not found!")
         else:
-            # logs(self.login,self.last_ref,data)
             self.attemps += 1
             data = data.lower()
             res = pd.read_csv(home_path[:-4] +'/files/references.csv')
             button = res["button"][res['reference'] == self.last_ref].item()
             if button != data :
+                logs(self.login,self.last_ref,'NOK')
                 pix =  QPixmap(home_path[:-4] +'/assets/nok.png')
                 self.state.setPixmap(pix)#.scaled(self.state.size()))
                 QCoreApplication.processEvents()
@@ -340,6 +340,7 @@ class User(QMainWindow,USER_UI):
                 self.state.setText("Try again")
                 QCoreApplication.processEvents()
             elif button == data:
+                logs(self.login,self.last_ref,'OK')
                 pix =  QPixmap(home_path[:-4] +'/assets/ok.png')
                 self.state.setPixmap(pix)#.scaled(self.state.size()))
                 QCoreApplication.processEvents()
@@ -357,13 +358,15 @@ class User(QMainWindow,USER_UI):
                 self.QTxtRef.setText("")
                 self.attemps = 0
                 QCoreApplication.processEvents()
+
     def sendData(self,data):
         try:
             res = pd.read_csv(home_path[:-4] +'/files/references.csv')
             code = res[res['reference'] == data]['code'].item()
             self.sendsignal.emit(str(code))
+            print("done")
         except Exception as e:
-            pass
+            print(e)
         
 
     def editSettings(self):

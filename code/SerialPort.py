@@ -19,7 +19,7 @@ class SerialPort(QObject):
 
     def portConnect(self):
         try:
-            self.ComPort = serial.Serial(self.portName,9600,timeout=0)
+            self.ComPort = serial.Serial(self.portName,9600,timeout=0,rtscts=True,dsrdtr=True)
         except Exception as e:
             print('could not connect with port "%s"'%self.portName)
 
@@ -52,7 +52,7 @@ class SerialPort(QObject):
         try:
             self.ComPort.open()
         except Exception as e:
-            pass
+            print("Cannot open this port", self.portName)
 
     def close(self):
         # if self.ComPort.is_open:
