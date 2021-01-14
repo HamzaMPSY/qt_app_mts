@@ -1,4 +1,4 @@
-pyqt5_material==1.14.4
+qt_material
 seaborn==0.9.0
 pandas==0.24.2
 matplotlib==3.1.1
