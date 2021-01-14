@@ -1,6 +1,6 @@
 qt_material
-seaborn==0.9.0
-pandas==0.24.2
-matplotlib==3.1.1
-PyQt5==5.15.1
-pyserial==3.4
+seaborn
+pandas
+matplotlib
+PyQt5
+pyserial
